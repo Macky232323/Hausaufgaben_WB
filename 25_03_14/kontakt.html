@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+
+
+</head>
+<body>
+    
+    <form>
+        
+                    <input id="firstname" type="text" placeholder="Vorname" readonly/>
+          <input id="lastname" type="text" placeholder="Nachname" />
+          <br />
+          <br />
+          <input id="email" type="email" placeholder="Email" />
+          <input id="password" type="password" placeholder="Passwort" required/>
+          <br />
+          <br />
+          <label>Geburtsdatum:</label>
+          <input type="date" />
+          <br />
+          <br />
+          <label>Magst du mich?</label>
+          <br />
+          <label>ja</label>
+          <input name="pizza" type="radio" />
+          <label>nein</label>
+          <input name="pizza" type="radio" />
+          <br />
+          <br />
+          <label>Welche Hobbies hast du?</label><br />
+          <label for="basketball">Basketball spielen</label>
+          <input id="basketball" type="checkbox" value="Basketball spielen" />
+          <label for="fahrrad">Fahrrad fahren</label>
+          <input id="fahrrad" type="checkbox" value="Fahrrad fahren" />
+          <br />
+          <br />
+          <label>Welche Haustiere hast du?</label><br />
+          <select>
+            <option value="">Hund</option>
+            <option value="">Katze</option>
+            <option value="">Schlange</option>
+            <option value="">keins</option>
+        </select>
+          <br />
+          <br />
+          <label>Nachricht:</label><br />
+          <textarea cols="30" rows="10" maxlength="50" minlength="10" placeholder="50 Zeichen"></textarea><br />
+          <button type="submit">senden</button>
+        
+      </form>
+
+</body>
+</html>

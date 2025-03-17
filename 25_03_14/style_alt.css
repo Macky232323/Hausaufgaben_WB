@@ -1,0 +1,105 @@
+:root {
+  --primary: rgb(246, 185, 74);
+  --secondary: rgb(246, 74, 166);
+}
+
+body {
+  margin: 0;
+}
+/* NAV-AREA START */
+.navbarContainer {
+  width: 100vw;
+  height: 60px;
+  background-color: black;
+  display: flex;
+  padding: 4px 16px;
+  box-sizing: border-box;
+}
+
+.navArea {
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+
+.navAreaOne {
+  background-color: yellow;
+  align-items: center;
+}
+.logoImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+a {
+  text-decoration: none;
+  display: flex;
+}
+.navBtn {
+  margin: 8px;
+  text-decoration: none;
+  &:hover {
+    color: red;
+    font-size: 20px;
+  }
+}
+.navAreaTwo {
+  background-color: beige;
+  justify-content: center;
+  align-items: center;
+}
+.navAreaThree {
+  background-color: purple;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* NAV-AREA END */
+
+/* Content START */
+.contentContainer {
+  width: 100%;
+  min-height: 50vh;
+  background-color: blue;
+  padding: 32px;
+  box-sizing: border-box;
+}
+/* Content END */
+
+/* Footer START */
+.footerContainer {
+  height: 200px;
+  width: 100%;
+  background-color: green;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Footer END */
+
+/* Globale Standard Styles */
+.standardinput {
+  margin: 4px;
+  height: 30px;
+  min-width: 200px;
+  font-size: 18px;
+  border-radius: 8px;
+  border-width: 0;
+  outline: none;
+  padding: 2px 8px;
+}
+
+.standardbtn {
+  background-color: var(--primary);
+  border-radius: 4px;
+  height: 35px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  margin: 8px;
+  &:hover {
+    background-color: var(--secondary);
+    color: white;
+  }
+}

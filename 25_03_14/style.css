@@ -1,0 +1,146 @@
+:root {
+  --primary: rgb(246, 185, 74);
+  --secondary: rgb(246, 74, 166);
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-image: url('bg2.jpg');
+
+}
+/* NAV-AREA START */
+.navbarContainer {
+  width: 100vw;
+  height: 60px;
+  display: flex;
+  padding: 4px 16px;
+  box-sizing: border-box;
+}
+
+.navArea {
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+
+.navAreaOne {
+  align-items: center;
+}
+.logoImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+a {
+  text-decoration: none;
+  display: flex;
+}
+.navBtn {
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+  &:hover {
+    color: red;
+    
+  }
+}
+.navAreaTwo {
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.navAreaThree {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* NAV-AREA END */
+
+/* Content START */
+.contentContainer {
+  width: 100%;
+  min-height: 50vh;
+  padding: 32px;
+  box-sizing: border-box;
+}
+/* Content END */
+
+/* Footer START */
+.footerContainer {
+  height: 200px;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Footer END */
+
+/* Globale Standard Styles */
+.standardinput {
+  margin: 4px;
+  height: 30px;
+  min-width: 200px;
+  font-size: 18px;
+  border-radius: 8px;
+  border-width: 0;
+  outline: none;
+  padding: 2px 8px;
+}
+
+.standardbtn {
+  background-color: var(--primary);
+  border-radius: 4px;
+  height: 35px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  margin: 8px;
+  &:hover {
+    background-color: var(--secondary);
+    color: white;
+  }
+}
+
+button,
+input {
+    height: 40px;
+    min-width: 200px;
+    padding: 5px 10px;
+    border: 1px solid rgb(193, 193, 193);
+    border-radius: 5px;
+    background-color: rgb(29, 28, 28);
+    color: rgb(193, 193, 193);
+}
+
+input {
+    height: 28px;
+    min-width: 178px;
+    padding: 5px 10px;
+    border: 1px solid rgb(193, 193, 193);
+    border-radius: 5px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(193, 193, 193);
+}
+
+button:hover {
+    color: red;
+    border-color: red;
+    background-color: rgb(0, 0, 0);
+}
+
+.list-item-button {
+    height: 15px;
+    min-width: 50px;
+    padding: 2px 5px;
+    font-size: 10px;
+}
+
+.summit {
+  height: 15px;
+  min-width: 50px;
+  padding: 2px 5px;
+  font-size: 10px;
+}

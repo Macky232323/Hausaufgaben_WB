@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gefuele</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Wie fühlst du dich heute?</h1>
+    <h2>Lösche die NICHTzutreffenden Gefühle aus der Liste!</h2>
+    <h2>Füge gegebenenfalls welche hinzu!</h2>
+
+    <div style="margin-bottom: 20px;">
+        <input type="text" id="newItem" placeholder="Name" value="">
+        <button id="addButton">Gefühl hinzufügen</button>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <button id="sortAsc">Aaahh-Zettt</button>
+        <button id="sortByLength">Gefühlslänge</button>
+    </div>
+
+    <div class="listen" id="list"></div><br>
+
+    <button id="removeLast">Letzten Eintrag löschen</button>
+
+    <script src="gefuehle.js"></script>
+</body>
+</html>

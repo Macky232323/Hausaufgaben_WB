@@ -1,0 +1,5 @@
+git status - zeigt an welche Dateien getracked oder untracked sind (Auf dem Stapel zum abholen gelegt oder nicht)
+git add * - Legt alle  Dateien auf den Stapel zum abholen
+git add <dateinamen> - Legt eine bestimmte Datei auf den Stapel zum abholen
+git commit -m "meine Nachricht" - setzt auf die Dateien die auf dem Stapel liegt eine feste Nachricht drauf
+git push - Holt den Stapel mit der Nachricht ab und lädt sie ins Repository hoch 
