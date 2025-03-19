@@ -1,0 +1,99 @@
+body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+header {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #a2a9b1;
+}
+
+header .search-bar {
+    display: flex;
+}
+
+header input[type="text"] {
+    padding: 5px;
+    border: 1px solid #a2a9b1;
+}
+
+header nav a {
+    margin-left: 10px;
+    color: #0645ad;
+    text-decoration: none;
+}
+
+aside {
+    grid-row: 2 / 3;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #a2a9b1;
+}
+
+aside nav a, aside section a {
+    display: block;
+    padding: 5px 0;
+    color: #0645ad;
+    text-decoration: none;
+}
+
+main {
+    grid-row: 2 / 3;
+    padding: 20px;
+}
+
+main section {
+    margin-bottom: 20px;
+}
+
+main h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+main ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+main li {
+    padding: 5px 0;
+}
+
+/* Stil für den Artikel des Tages */
+.artikel-des-tages img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Schriftgrößen */
+body {
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+/* Farbgebung */
+body {
+    color: #222;
+}
+
+a {
+    color: #0645ad;
+}
+
+/* Hover-Effekte */
+a:hover {
+    text-decoration: underline;
+}

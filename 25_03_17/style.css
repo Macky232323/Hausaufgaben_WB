@@ -1,0 +1,30 @@
+/* Descendent Combinator (Leerzeichen): Wählt alle li-Elemente innerhalb von nav aus */
+nav li {
+    color: blue;
+}
+
+/* Child Combinator (>): Wählt nur li-Elemente aus, die direkte Kinder von ul sind */
+/* Unterschied: Der Descendent Combinator wählt alle li-Elemente innerhalb von nav aus, unabhängig von ihrer Verschachtelungstiefe. Der Child Combinator wählt nur die direkten Kinder aus. */
+nav > ul > li {
+    font-weight: bold;
+}
+
+/* Hover-Pseudoklasse: Ändert die Hintergrundfarbe von Links beim Überfahren mit der Maus */
+a:hover {
+    background-color: lightgray;
+}
+
+/* nth-child-Pseudoklasse: Wählt jedes zweite li-Element innerhalb von ul aus */
+li:nth-child(even) {
+    text-decoration: underline;
+}
+
+/* Marker-Pseudoelement: Ändert die Farbe der Aufzählungspunkte in Listen */
+li::marker {
+    color: green;
+}
+
+/* Selection-Pseudoelement: Ändert die Hintergrundfarbe des ausgewählten Texts */
+::selection {
+    background-color: yellow;
+}
