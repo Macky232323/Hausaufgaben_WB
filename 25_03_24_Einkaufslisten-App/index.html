@@ -1,48 +1,32 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Einkaufsliste</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Einkaufsliste</h1>
-
-        <div class="input-section">
-            <input type="text" id="artikel" placeholder="Artikel">
-            <input type="number" id="anzahl" placeholder="Anzahl">
-            <input type="number" id="preis" placeholder="Preis">
-            <select id="kategorie">
-                <option value="Obst">Obst 🍎</option>
-                <option value="Gemüse">Gemüse 🥦</option>
-                <option value="Drogerie">Drogerie 🧼</option>
-                <option value="Sonstiges">Sonstiges 🛒</option>
-            </select>
-            <button id="add-button">Hinzufügen</button>
-        </div>
-
-        <ul id="einkaufsliste"></ul>
-
-        <div class="total-section">
-            <p>Gesamt: <span id="gesamtpreis">0.00</span> €</p>
-            <p>Budget: <input type="number" id="budget" placeholder="Budget festlegen">
-                <span id="budget-uebrig"></span>
-            </p>
-            <button id="leeren-button">Liste leeren</button>
-            <button id="toggle-dark-mode">Dark Mode</button>
-        </div>
-
-        <div class="sort-section">
-            <button id="sort-alphabetisch">Sortieren (A-Z)</button>
-            <button id="sort-preis">Sortieren (Preis)</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>Einkaufsliste</h1>
+    <input type="number" id="budget" placeholder="Budget festlegen...">
+    <p id="budgetFeedback"></p>
+    <input type="text" id="artikel" placeholder="Artikelname...">
+    <input type="number" id="anzahl" placeholder="Anzahl...">
+    <input type="number" id="preis" placeholder="Preis pro Stück...">
+    <select id="kategorie">
+        <option value="Obst">🍏 Obst</option>
+        <option value="Gemüse">🥕 Gemüse</option>
+        <option value="Drogerie">🧼 Drogerie</option>
+        <option value="Sonstiges">🛒 Sonstiges</option>
+    </select>
+    <button id="addButton">Hinzufügen</button>
+    <ul id="liste"></ul>
+    <h5 id="gesamt"></h5>
+    <button id="toggleDarkMode">Dark Mode</button>
 </body>
 
+</html>
 </html>

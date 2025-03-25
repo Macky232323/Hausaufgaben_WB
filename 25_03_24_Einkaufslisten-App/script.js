@@ -1,376 +1,202 @@
-// Variablen für alle relevanten DOM-Elemente
+const addButton = document.getElementById("addButton");
 const artikelInput = document.getElementById("artikel");
 const anzahlInput = document.getElementById("anzahl");
 const preisInput = document.getElementById("preis");
 const kategorieInput = document.getElementById("kategorie");
-const addButton = document.getElementById("add-button");
-const einkaufsliste = document.getElementById("einkaufsliste");
-const gesamtpreisAnzeige = document.getElementById("gesamtpreis");
-const leerenButton = document.getElementById("leeren-button");
+const liste = document.getElementById("liste");
+const gesamt = document.getElementById("gesamt");
+const toggleDarkModeButton = document.getElementById("toggleDarkMode");
 const budgetInput = document.getElementById("budget");
-const budgetUebrigAnzeige = document.getElementById("budget-uebrig");
-const darkModeButton = document.getElementById("toggle-dark-mode");
-const sortAlphabetischButton = document.getElementById("sort-alphabetisch");
-const sortPreisButton = document.getElementById("sort-preis");
+const budgetFeedback = document.getElementById("budgetFeedback");
 
-// Array zum Speichern der Artikeldaten
-let einkaufslisteDaten // Initialisierung des Arrays!
-// Variable für den Gesamtpreis
-let gesamtpreis = 0;
-// Variable für das Budget
+let gesamtPreis = 0;
 let budget = 0;
-// Zustand für Dark Mode
-let darkMode = false;
 
-// Funktion zum Abrufen des Emojis basierend auf der Kategorie
-function getKategorieEmoji(kategorie) {
-    switch (kategorie) {
-        case "Obst":
-            return "🍎";
-        case "Gemüse":
-            return "🥦";
-        case "Drogerie":
-            return "🧼";
-        case "Sonstiges":
-            return "🛒";
-        default:
-            return "🛒";
-    }
-}
+budgetInput.addEventListener("change", () => {
+    budget = Number(budgetInput.value);
+    updateBudgetFeedback();
+});
 
-// Funktion zur Validierung der Eingabefelder
-function validateInput() {
-    let isValid = true;
+addButton.addEventListener("click", addArtikel);
 
-    if (artikelInput.value.trim() === "") {
+function addArtikel() {
+    const artikel = artikelInput.value.trim();
+    const anzahl = anzahlInput.value.trim();
+    const preis = preisInput.value.trim();
+    const kategorie = kategorieInput.value;
+
+    // Eingabevalidierung
+    if (!artikel) {
         artikelInput.classList.add("error");
-        isValid = false;
+        return;
     } else {
         artikelInput.classList.remove("error");
     }
 
-    if (anzahlInput.value.trim() === "" || isNaN(anzahlInput.value)) {
+    if (!anzahl || isNaN(anzahl) || Number(anzahl) <= 0) {
         anzahlInput.classList.add("error");
-        isValid = false;
+        return;
     } else {
         anzahlInput.classList.remove("error");
     }
 
-    if (preisInput.value.trim() === "" || isNaN(preisInput.value)) {
+    if (!preis || isNaN(preis) || Number(preis) <= 0) {
         preisInput.classList.add("error");
-        isValid = false;
+        return;
     } else {
         preisInput.classList.remove("error");
     }
 
-    return isValid;
-}
+    // Emoji für die Kategorie auswählen
+    let kategorieEmoji = "";
+    switch (kategorie) {
+        case "Obst":
+            kategorieEmoji = "🍏";
+            break;
+        case "Gemüse":
+            kategorieEmoji = "🥕";
+            break;
+        case "Drogerie":
+            kategorieEmoji = "🧼";
+            break;
+        case "Sonstiges":
+            kategorieEmoji = "🛒";
+            break;
+    }
 
-// Funktion zum Aktualisieren des Gesamtpreises
-function gesamtpreisAktualisieren() {
-    gesamtpreis = 0;
-    const listItems = einkaufsliste.querySelectorAll("li");
+    const itemPreis = Number(preis) * Number(anzahl);
 
-    listItems.forEach(item => {
-        const checkbox = item.querySelector("input[type='checkbox']");
-        if (checkbox.checked) {
-            const preisText = item.textContent.match(/Gesamt: (\d+\.\d+) €/);
-            if (preisText && preisText[1]) {
-                gesamtpreis += parseFloat(preisText[1]);
-            }
+    // Dopplung prüfen
+    let existingItem = null;
+    document.querySelectorAll("#liste li").forEach(li => {
+        const textContent = li.textContent.split("------")[0].trim();
+        const existingArtikel = textContent.split("x ")[1].split(":")[0];
+        const existingPreis = textContent.split("€ p.P.")[0].split(": ")[1];
+        if (existingArtikel === artikel && Number(existingPreis) === Number(preis)) {
+            existingItem = li;
         }
     });
 
-    // Korrekte Berechnung des Gesamtpreises basierend auf einkaufslisteDaten
-    gesamtpreis = einkaufslisteDaten.reduce((sum, item) => {
-        return sum + (item.checked ? item.gesamtArtikelPreis : 0);
-    }, 0);
-
-    gesamtpreisAnzeige.textContent = gesamtpreis.toFixed(2);
-    aktualisiereBudgetAnzeige();
-}
-
-// Funktion zum Aktualisieren der Budgetanzeige
-function aktualisiereBudgetAnzeige() {
-    budget = parseFloat(budgetInput.value) || 0;
-    const budgetUebrig = budget - gesamtpreis;
-    budgetUebrigAnzeige.textContent = `Budget übrig: ${budgetUebrig.toFixed(2)} €`;
-
-    if (budgetUebrig < 0) {
-        budgetUebrigAnzeige.style.color = "red";
+    if (existingItem) {
+        // Anzahl des bestehenden Artikels erhöhen
+        const existingAnzahl = Number(existingItem.textContent.split("x ")[0].split(" ")[1]);
+        const newAnzahl = existingAnzahl + Number(anzahl);
+        existingItem.textContent = `${kategorieEmoji} ${newAnzahl} x ${artikel}: ${preis}€ p.P. ------ ${newAnzahl * preis}€`;
     } else {
-        budgetUebrigAnzeige.style.color = "green";
-    }
-}
+        // Neues Element erstellen und in die Liste einfügen
+        const new_li = document.createElement("li");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = true; // Standardmäßig aktiviert
 
-// Funktion zum Umschalten des Dark Mode
-function toggleDarkMode() {
-    darkMode = !darkMode;
-    document.body.classList.toggle("dark-mode", darkMode);
-}
+        const itemText = document.createElement("span");
+        itemText.textContent = `${kategorieEmoji} ${anzahl} x ${artikel}: ${preis}€ p.P. ------ ${itemPreis}€`;
 
-// Funktion zum Entfernen eines Artikels
-function entferneArtikel(li, index) {
-    if (li) {
-        einkaufslisteDaten.splice(index, 1);
-        li.remove();
-        gesamtpreisAktualisieren();
-        aktualisiereBudgetAnzeige();
-    }
-}
+        new_li.appendChild(checkbox);
+        new_li.appendChild(itemText);
 
-// Funktion zum Bearbeiten eines Eintrags
-function bearbeiteEintrag(li, index) {
-    if (li) {
-        const item = einkaufslisteDaten[index];
-
-        const inputAnzahl = document.createElement("input");
-        inputAnzahl.type = "number";
-        inputAnzahl.value = item.anzahl;
-
-        const inputArtikel = document.createElement("input");
-        inputArtikel.type = "text";
-        inputArtikel.value = item.artikel;
-
-        const inputPreis = document.createElement("input");
-        inputPreis.type = "number";
-        inputPreis.value = item.preis;
-
-        li.innerHTML = "";
-        li.appendChild(inputAnzahl);
-        li.appendChild(inputArtikel);
-        li.appendChild(inputPreis);
-
-        const speichernButton = document.createElement("button");
-        speichernButton.textContent = "Speichern";
-        li.appendChild(speichernButton);
-
-        const abbrechenButton = document.createElement("button");
-        abbrechenButton.textContent = "Abbrechen";
-        li.appendChild(abbrechenButton);
-
-        speichernButton.addEventListener("click", () => {
-            const neueAnzahl = parseFloat(inputAnzahl.value);
-            const neuerArtikel = inputArtikel.value.trim();
-            const neuerPreis = parseFloat(inputPreis.value);
-
-            if (neuerArtikel && !isNaN(neueAnzahl) && !isNaN(neuerPreis)) {
-                item.anzahl = neueAnzahl;
-                item.artikel = neuerArtikel;
-                item.preis = neuerPreis;
-                item.gesamtArtikelPreis = neueAnzahl * neuerPreis;
-
-                updateEintrag(index);
-                gesamtpreisAktualisieren();
-                aktualisiereBudgetAnzeige();
+        // Checkbox Event Listener
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                itemText.classList.remove("checked");
             } else {
-                alert("Ungültige Eingabe!");
+                itemText.classList.add("checked");
             }
+            updatePreis();
         });
 
-        abbrechenButton.addEventListener("click", () => {
-            updateEintrag(index); // Stelle den ursprünglichen Eintrag wieder her
+        // Füge einen Löschen Button hinzu
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.classList.add("delete-btn");
+        deleteButton.addEventListener("click", () => {
+            const preisText = new_li.textContent.split("------")[1];
+            const preisToRemove = Number(preisText.replace("€", ""));
+            liste.removeChild(new_li);
+            gesamtPreis -= preisToRemove;
+            updatePreis();
+            updateBudgetFeedback();
         });
+        new_li.appendChild(deleteButton);
+
+        liste.appendChild(new_li);
     }
+
+    // Inputfelder leeren
+    artikelInput.value = "";
+    anzahlInput.value = "";
+    preisInput.value = "";
+    kategorieInput.value = "Obst"; // Standardwert zurücksetzen
+
+    // Gesamtpreis aktualisieren
+    gesamtPreis += itemPreis;
+    updatePreis();
+    updateBudgetFeedback();
 }
 
-// Funktion zum Aktualisieren eines Eintrags in der Liste
-function updateEintrag(index) {
-    const li = einkaufsliste.querySelector(`[data-index="${index}"]`);
-    if (li) {
-        const item = einkaufslisteDaten[index];
-        const kategorieEmoji = getKategorieEmoji(item.kategorie);
-        li.innerHTML = `
-            <input type="checkbox" ${item.checked ? 'checked' : ''}>
-            <span class="kategorie-emoji">${kategorieEmoji}</span> ${item.anzahl} x ${item.artikel}: ${item.preis.toFixed(2)} € (Gesamt: ${item.gesamtArtikelPreis.toFixed(2)} €)
-            <button class="entfernen-button">Entfernen</button>
-            <button class="bearbeiten-button">Bearbeiten</button>
-            <span class="tooltip-container">
-                <span class="tooltip-text">${item.hinzugefuegtAm}</span>
-            </span>
-        `;
-
-        // Event-Listener für die neu erstellten Elemente zuweisen
+function updatePreis() {
+    gesamtPreis = 0;
+    document.querySelectorAll("#liste li").forEach(li => {
         const checkbox = li.querySelector("input[type='checkbox']");
-        checkbox.addEventListener("change", () => {
-            item.checked = checkbox.checked;
-            gesamtpreisAktualisieren();
-        });
-
-        const entfernenButton = li.querySelector(".entfernen-button");
-        entfernenButton.addEventListener("click", () => {
-            entferneArtikel(li, index);
-        });
-
-        const bearbeitenButton = li.querySelector(".bearbeiten-button");
-        bearbeitenButton.addEventListener("click", () => {
-            bearbeiteEintrag(li, index);
-        });
-    }
+        if (checkbox.checked) {
+            const preisText = li.textContent.split("------")[1];
+            gesamtPreis += Number(preisText.replace("€", ""));
+        }
+    });
+    gesamt.textContent = `Gesamt: ${gesamtPreis.toFixed(2)}€`;
 }
 
-// Funktion zum Hinzufügen eines neuen Artikels zur Einkaufsliste
-function artikelHinzufuegen() {
-    if (validateInput()) {
-        const artikel = artikelInput.value.trim();
-        const anzahl = parseInt(anzahlInput.value);
-        const preis = parseFloat(preisInput.value);
-        const kategorie = kategorieInput.value;
-        const kategorieEmoji = getKategorieEmoji(kategorie);
-        const gesamtArtikelPreis = anzahl * preis;
-        const hinzugefuegtAm = new Date().toLocaleString();
-
-        const neuesItem = {
-            artikel: artikel,
-            anzahl: anzahl,
-            preis: preis,
-            kategorie: kategorie,
-            gesamtArtikelPreis: gesamtArtikelPreis,
-            hinzugefuegtAm: hinzugefuegtAm,
-            checked: true // Standardmäßig ausgewählt
-        };
-
-        einkaufslisteDaten.push(neuesItem);
-
-        const li = document.createElement("li");
-        li.setAttribute("data-index", einkaufslisteDaten.length - 1);
-        li.innerHTML = `
-            <input type="checkbox" checked>
-            <span class="kategorie-emoji">${kategorieEmoji}</span> ${anzahl} x ${artikel}: ${preis.toFixed(2)} € (Gesamt: ${gesamtArtikelPreis.toFixed(2)} €)
-            <button class="entfernen-button">Entfernen</button>
-            <button class="bearbeiten-button">Bearbeiten</button>
-            <span class="tooltip-container">
-                <span class="tooltip-text">${hinzugefuegtAm}</span>
-            </span>
-        `;
-
-        einkaufsliste.appendChild(li);
-
-        // Event-Listener für die neu erstellten Elemente zuweisen
-        const checkbox = li.querySelector("input[type='checkbox']");
-        checkbox.addEventListener("change", () => {
-            neuesItem.checked = checkbox.checked;
-            gesamtpreisAktualisieren();
-        });
-
-        const entfernenButton = li.querySelector(".entfernen-button");
-        entfernenButton.addEventListener("click", () => {
-            entferneArtikel(li, einkaufslisteDaten.length - 1);
-        });
-
-        const bearbeitenButton = li.querySelector(".bearbeiten-button");
-        bearbeitenButton.addEventListener("click", () => {
-            bearbeiteEintrag(li, einkaufslisteDaten.length - 1);
-        });
-
-        // Eingabefelder zurücksetzen
-        artikelInput.value = "";
-        anzahlInput.value = "";
-        preisInput.value = "";
-
-        // Gesamtpreis und Budget aktualisieren
-        gesamtpreisAktualisieren();
-        aktualisiereBudgetAnzeige();
+function updateBudgetFeedback() {
+    const verbleibendesBudget = budget - gesamtPreis;
+    if (verbleibendesBudget < 0) {
+        budgetFeedback.textContent = `Budget überschritten um ${Math.abs(verbleibendesBudget).toFixed(2)}€!`;
+        budgetFeedback.style.color = "red";
+    } else if (verbleibendesBudget < budget * 0.2) {
+        budgetFeedback.textContent = `Noch ${verbleibendesBudget.toFixed(2)}€ vom Budget übrig. Vorsicht!`;
+        budgetFeedback.style.color = "orange";
     } else {
-        alert("Bitte füllen Sie alle Felder korrekt aus.");
+        budgetFeedback.textContent = `Noch ${verbleibendesBudget.toFixed(2)}€ vom Budget übrig.`;
+        budgetFeedback.style.color = "green";
     }
 }
 
-// Event-Listener für den "Hinzufügen"-Button
-addButton.addEventListener("click", artikelHinzufuegen);
+// Funktion zum Leeren der gesamten Liste
+function clearList() {
+    liste.innerHTML = "";
+    gesamtPreis = 0;
+    updatePreis();
+    updateBudgetFeedback();
+}
 
-// Event-Listener zum Leeren der Liste
-leerenButton.addEventListener("click", () => {
-    einkaufslisteDaten
-    einkaufsliste.innerHTML = "";
-    gesamtpreis = 0;
-    gesamtpreisAnzeige.textContent = "0.00";
-    budgetInput.value = "";
-    aktualisiereBudgetAnzeige();
+// Button zum Leeren der Liste hinzufügen
+const clearButton = document.createElement("button");
+clearButton.textContent = "Liste leeren";
+clearButton.addEventListener("click", clearList);
+document.body.appendChild(clearButton);
+
+// Dark Mode Funktionalität
+toggleDarkModeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
 });
 
-// Event-Listener für das Budget-Input-Feld
-budgetInput.addEventListener("change", aktualisiereBudgetAnzeige);
-
-// Event-Listener für den Dark Mode Button
-darkModeButton.addEventListener("click", toggleDarkMode);
-
-// Event-Listener für alphabetische Sortierung
-sortAlphabetischButton.addEventListener("click", () => {
-    einkaufslisteDaten.sort((a, b) => a.artikel.localeCompare(b.artikel));
-    einkaufsliste.innerHTML = ""; // Liste leeren
-    einkaufslisteDaten.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.setAttribute("data-index", index);
-        const kategorieEmoji = getKategorieEmoji(item.kategorie);
-        li.innerHTML = `
-            <input type="checkbox" ${item.checked ? 'checked' : ''}>
-            <span class="kategorie-emoji">${kategorieEmoji}</span> ${item.anzahl} x ${item.artikel}: ${item.preis.toFixed(2)} € (Gesamt: ${item.gesamtArtikelPreis.toFixed(2)} €)
-            <button class="entfernen-button">Entfernen</button>
-            <button class="bearbeiten-button">Bearbeiten</button>
-            <span class="tooltip-container">
-                <span class="tooltip-text">${item.hinzugefuegtAm}</span>
-            </span>
-        `;
-        einkaufsliste.appendChild(li);
-
-        // Event-Listener für die neu erstellten Elemente zuweisen (innerhalb der Schleife!)
-        const checkbox = li.querySelector("input[type='checkbox']");
-        checkbox.addEventListener("change", () => {
-            item.checked = checkbox.checked;
-            gesamtpreisAktualisieren();
-        });
-
-        const entfernenButton = li.querySelector(".entfernen-button");
-        entfernenButton.addEventListener("click", () => {
-            entferneArtikel(li, index);
-        });
-
-        const bearbeitenButton = li.querySelector(".bearbeiten-button");
-        bearbeitenButton.addEventListener("click", () => {
-            bearbeiteEintrag(li, index);
-        });
-    });
+// Funktionalität mit Enter-Taste
+artikelInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addButton.click();
+    }
 });
 
-// Event-Listener für Preis-Sortierung
-sortPreisButton.addEventListener("click", () => {
-    einkaufslisteDaten.sort((a, b) => a.gesamtArtikelPreis - b.gesamtArtikelPreis);
-    einkaufsliste.innerHTML = ""; // Liste leeren
-    einkaufslisteDaten.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.setAttribute("data-index", index);
-        const kategorieEmoji = getKategorieEmoji(item.kategorie);
-        li.innerHTML = `
-            <input type="checkbox" ${item.checked ? 'checked' : ''}>
-            <span class="kategorie-emoji">${kategorieEmoji}</span> ${item.anzahl} x ${item.artikel}: ${item.preis.toFixed(2)} € (Gesamt: ${item.gesamtArtikelPreis.toFixed(2)} €)
-            <button class="entfernen-button">Entfernen</button>
-            <button class="bearbeiten-button">Bearbeiten</button>
-            <span class="tooltip-container">
-                <span class="tooltip-text">${item.hinzugefuegtAm}</span>
-            </span>
-        `;
-        einkaufsliste.appendChild(li);
-
-        // Event-Listener für die neu erstellten Elemente zuweisen (innerhalb der Schleife!)
-        const checkbox = li.querySelector("input[type='checkbox']");
-        checkbox.addEventListener("change", () => {
-            item.checked = checkbox.checked;
-            gesamtpreisAktualisieren();
-        });
-
-        const entfernenButton = li.querySelector(".entfernen-button");
-        entfernenButton.addEventListener("click", () => {
-            entferneArtikel(li, index);
-        });
-
-        const bearbeitenButton = li.querySelector(".bearbeiten-button");
-        bearbeitenButton.addEventListener("click", () => {
-            bearbeiteEintrag(li, index);
-        });
-    });
+anzahlInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addButton.click();
+    }
 });
 
-// Initialisierung
-gesamtpreisAktualisieren();
-aktualisiereBudgetAnzeige();
+preisInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addButton.click();
+    }
+});
