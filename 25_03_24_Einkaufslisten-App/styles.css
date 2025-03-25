@@ -1,0 +1,167 @@
+/* Grundlegende Stile für die gesamte Seite */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s, color 0.3s; /* Sanfte Übergänge für Dark Mode */
+}
+
+/* Container für die Einkaufsliste */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s; /* Sanfte Übergänge für Dark Mode */
+}
+
+/* Überschrift der Seite */
+h1 {
+    text-align: center;
+    color: #333;
+    transition: color 0.3s; /* Sanfte Übergänge für Dark Mode */
+}
+
+/* Bereich für die Eingabefelder */
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Stile für die Eingabefelder */
+.input-section input,
+.input-section select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Stile für den "Hinzufügen"-Button */
+.input-section button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.input-section button:hover {
+    background-color: #45a049;
+}
+
+/* Stile für die Einkaufsliste */
+#einkaufsliste {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Stile für jeden Eintrag in der Einkaufsliste */
+#einkaufsliste li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#einkaufsliste li:last-child {
+    border-bottom: none;
+}
+
+/* Abstand für die Checkboxen */
+#einkaufsliste li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Bereich für die Gesamtsumme und Buttons */
+.total-section {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Stile für die Buttons im unteren Bereich */
+.total-section button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.total-section button:hover {
+    background-color: #d32f2f;
+}
+
+/* Fehlermeldung für ungültige Eingaben */
+.error {
+    border: 1px solid red;
+}
+
+/* Tooltip-Stile */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Dark Mode Stile */
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode .container {
+    background-color: #444;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode h1 {
+    color: #fff;
+}
+
+.dark-mode #einkaufsliste li {
+    border-bottom: 1px solid #666;
+}
+
+.dark-mode .input-section input,
+.dark-mode .input-section select {
+    background-color: #555;
+    color: #fff;
+    border-color: #666;
+}
