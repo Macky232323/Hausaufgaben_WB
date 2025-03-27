@@ -25,7 +25,9 @@ app.get("/randomname", (req, res) => {
 const users = [
   { id: 1, name: "Nassima", city: "Berlin" },
   { id: 2, name: "Suheib", city: "Frankfurt" },
-  { id: 3, name: "Alex", city: "Erfurt" }
+  { id: 3, name: "Alex", city: "Erfurt" },
+  { id: 4, name: "Lena", city: "Hamburg" },
+  { id: 15, name: "Ronny", city: "Leipzig" },
 ];
 
 app.get("/user/:id", (req, res) => {
@@ -34,6 +36,6 @@ app.get("/user/:id", (req, res) => {
   if (foundUser) {
     res.json(foundUser);
   } else {
-    res.status(404).send({ error: "User not found" });
+    res.status(404).send({ error: "User not found mit ID:" + id });
   }
 });
