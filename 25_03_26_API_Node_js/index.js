@@ -14,10 +14,26 @@ app.get("/data", (req, res) => {
 });
 
 app.listen(5001, () => {
-  console.log("Server läuft auf http://localhost:5001&quot")
-    })
+  console.log("Server läuft auf http://localhost:5001");
+});
 
-    app.get("/randomname", (req, res) => {
-      const name = generateName();
-      res.send(name);
-    });
+app.get("/randomname", (req, res) => {
+  const name = generateName();
+  res.send(name);
+});
+
+const users = [
+  { id: 1, name: "Nassima", city: "Berlin" },
+  { id: 2, name: "Suheib", city: "Frankfurt" },
+  { id: 3, name: "Alex", city: "Erfurt" }
+];
+
+app.get("/user/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const foundUser = users.find(user => user.id == id);
+  if (foundUser) {
+    res.json(foundUser);
+  } else {
+    res.status(404).send({ error: "User not found" });
+  }
+});
