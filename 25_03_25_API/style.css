@@ -1,0 +1,86 @@
+/* Globale Stile */
+body {
+    display: flex; /* Use Flexbox for the main layout */
+    flex-direction: column; /* Stack elements vertically by default */
+    align-items: center; /* Center elements horizontally */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Container for Weather section */
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-around; /* Distribute items evenly */
+    max-width: 960px; /* Limit the container width */
+    width: 100%; /* Take full width of the body */
+}
+
+/* Weather Section */
+#weather-section {
+    flex: 1; /* Take up available space */
+    min-width: 300px; /* Minimum width for the section */
+    margin-bottom: 20px; /* Add some space below */
+}
+
+/* General input and button styling */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%; /* Occupy full width of their container */
+    max-width: 250px; /* Limit the max width */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Output areas styling */
+#weather-output {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    width: 100%; /* Occupy full width of their container */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+/* Weather output specific styling */
+#weather-output h3 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+#weather-output p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Media Queries for Responsive Layout */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack sections vertically on smaller screens */
+    }
+
+    #weather-section {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
