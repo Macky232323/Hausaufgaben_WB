@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Bello",
+    "art": "Hund",
+    "alter": 3
+  },
+  {
+    "id": 2,
+    "name": "Mieze",
+    "art": "Katze",
+    "alter": 5
+  },
+  {
+    "id": 3,
+    "name": "Charlie",
+    "art": "Hund",
+    "alter": 2
+  },
+  {
+    "id": 4,
+    "name": "Luna",
+    "art": "Katze",
+    "alter": 1
+  },
+  {
+    "id": 5,
+    "name": "Max",
+    "art": "Hund",
+    "alter": 7
+  },
+  {
+    "id": 6,
+    "name": "Lilly",
+    "art": "Katze",
+    "alter": 4
+  },
+  {
+    "id": 7,
+    "name": "Rocky",
+    "art": "Hund",
+    "alter": 6
+  },
+  {
+    "id": 8,
+    "name": "Nala",
+    "art": "Katze",
+    "alter": 2
+  },
+  {
+    "id": 9,
+    "name": "Buddy",
+    "art": "Hund",
+    "alter": 8
+  },
+  {
+    "id": 10,
+    "name": "Susi",
+    "art": "Katze",
+    "alter": 3
+  },
+  {
+    "id": 11,
+    "name": "Jack",
+    "art": "Hund",
+    "alter": 5
+  },
+  {
+    "id": 12,
+    "name": "Molly",
+    "art": "Katze",
+    "alter": 6
+  },
+  {
+    "id": 13,
+    "name": "Oskar",
+    "art": "Hund",
+    "alter": 4
+  },
+  {
+    "id": 14,
+    "name": "Daisy",
+    "art": "Katze",
+    "alter": 7
+  },
+  {
+    "id": 15,
+    "name": "Sam",
+    "art": "Hund",
+    "alter": 1
+  },
+  {
+    "name": "Schnurpsel",
+    "art": "Katze",
+    "alter": 3,
+    "id": 16
+  }
+]

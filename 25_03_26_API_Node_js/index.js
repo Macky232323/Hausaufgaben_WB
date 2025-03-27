@@ -23,14 +23,14 @@ app.get("/randomname", (req, res) => {
 });
 
 const users = [
-  { id: 1, name: "Nassima", city: "Berlin" },
+  { id: 1, name: "Nassima", city: "Leipzig" },
   { id: 2, name: "Suheib", city: "Frankfurt" },
   { id: 3, name: "Alex", city: "Erfurt" },
   { id: 4, name: "Lena", city: "Hamburg" },
   { id: 15, name: "Ronny", city: "Leipzig" },
 ];
 
-app.get("/user/:id", (req, res) => {
+app.get("/users/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const foundUser = users.find(user => user.id == id);
   if (foundUser) {
@@ -38,4 +38,23 @@ app.get("/user/:id", (req, res) => {
   } else {
     res.status(404).send({ error: "User not found mit ID:" + id });
   }
+});
+
+app.get("/users/search", (req, res) => {
+  const city = req.query.city;
+  const result = users.filter(user => user.city === city);
+  res.json(result);
+});
+
+app.use(express.json());
+
+app.post("/users", (req, res) => {
+  const { name, city } = req.body;
+  const newUser = {
+    id: users.length + 1,
+    name: name,
+    city: city
+  };
+  users.push(newUser);
+  res.json(users);
 });
