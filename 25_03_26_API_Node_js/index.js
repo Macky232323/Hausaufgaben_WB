@@ -12,10 +12,10 @@ app.get("/data", (req, res) => {
   ]);
 });
 
-app.listen(3000, () => {
-  console.log("Server läuft auf http://localhost:3000&quot;);
-});
+app.listen(5001, () => {
+  console.log("Server läuft auf http://localhost:5001&quot")
+    })
 
 app.get("/randomname", (req, res) => {
-    res.send("Du hast erfolgreich die /randomname Route angesprochen");
-  });
+    res.send("Du hast erfolgreich die /randomname Route angesprochen")
+  })
