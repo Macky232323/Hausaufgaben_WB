@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierheim-API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tier hinzufügen</h1>
+        <div class="input-container">
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="art" placeholder="Art">
+            <input type="number" id="alter" placeholder="Alter">
+            <button id="add-button">Hinzufügen</button>
+        </div>
+        <h2>Tierliste</h2>
+        <div id="tier-list-container">
+            <table id="tier-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Art</th>
+                        <th>Alter</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="frontend.js"></script>
+</body>
+</html>

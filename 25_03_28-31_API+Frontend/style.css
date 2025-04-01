@@ -1,0 +1,85 @@
+body {
+    font-family: sans-serif;
+    background: none;
+    background-image: url('bg01.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #eee;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 600px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #dd0000;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+input, button {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #eee;
+}
+
+button {
+    background-color: #d64a4a;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #dd0000;
+}
+
+#tier-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+}
+
+/* Rote Scrollbar */
+#tier-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#tier-list-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#tier-list-container::-webkit-scrollbar-thumb {
+    background-color: #dd0000;
+    border-radius: 4px;
+}

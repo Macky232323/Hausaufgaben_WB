@@ -94,17 +94,5 @@
     "art": "Katze",
     "alter": 3,
     "id": 16
-  },
-  {
-    "name": "Schnurpsel",
-    "art": "Katze",
-    "alter": 5,
-    "id": 17
-  },
-  {
-    "name": "Mathilda",
-    "art": "Fuchs",
-    "alter": 11,
-    "id": 18
   }
 ]
