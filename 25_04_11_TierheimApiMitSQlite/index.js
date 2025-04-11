@@ -100,9 +100,38 @@ app.post("/tiere", (req,res) => {
 app.put("/tiere/:id", (req, res) => {
     const id = req.params.id;
     const { tierart, name, krankheit, age, gewicht } = req.body;
-    const updateTierQuery = `UPDATE tiere SET tierart = ?, name = ?, krankheit = ?, age = ?, gewicht = ? WHERE id = ?`;
+    let updateFields = [];
+    let updateValues = [];
 
-    db.run(updateTierQuery, [tierart, name, krankheit, age, gewicht, id], function(err) {
+    if (tierart !== undefined) {
+        updateFields.push("tierart = ?");
+        updateValues.push(tierart);
+    }
+    if (name !== undefined) {
+        updateFields.push("name = ?");
+        updateValues.push(name);
+    }
+    if (krankheit !== undefined) {
+        updateFields.push("krankheit = ?");
+        updateValues.push(krankheit);
+    }
+    if (age !== undefined) {
+        updateFields.push("age = ?");
+        updateValues.push(age);
+    }
+    if (gewicht !== undefined) {
+        updateFields.push("gewicht = ?");
+        updateValues.push(gewicht);
+    }
+
+    if (updateFields.length === 0) {
+        return res.status(400).send("Fehler: Es wurden keine Felder zum Aktualisieren im Request Body gefunden.");
+    }
+
+    const updateQuery = `UPDATE tiere SET ${updateFields.join(", ")} WHERE id = ?`;
+    updateValues.push(id);
+
+    db.run(updateQuery, updateValues, function(err) {
         if (err) {
             console.error(err);
             return res.status(500).send("Fehler beim Aktualisieren des Tieres in der Datenbank.");
