@@ -9,7 +9,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    color: #eee;
+    color: #ffffff;
 }
 
 .container {
@@ -55,18 +55,26 @@ button {
     border: 1px solid #555;
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.1);
-    color: #eee;
+    color: #ffffff;
     box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
     background-color: #d64a4a;
-    color: white;
+    color: #ffffff;
     cursor: pointer;
 }
 
 button:hover {
     background-color: #dd0000;
+}
+
+.delete-button {
+    height: 30px;
+       
 }
 
 #tier-list-container {
@@ -98,8 +106,7 @@ td {
     padding: 10px;
     text-align: left;
     background-color: rgba(255, 255, 255, 0.1);
-    color: #eee;
-    border-radius: 4px;
+    color: #ffffff
 }
 
 #tier-list-container::-webkit-scrollbar {
