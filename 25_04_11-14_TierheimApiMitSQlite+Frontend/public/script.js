@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gewichtInput = document.getElementById('gewicht');
     const addButton = document.getElementById('add-button');
     const tierTableBody = document.querySelector('#tier-table tbody');
+    const headers = document.querySelectorAll('#tier-table th'); // Tabellenüberschriften
+
+    let sortDirection = {}; // Objekt, um die Sortierrichtung für jede Spalte zu speichern
+    let lastSortedHeader = null; // Variable, um den zuletzt sortierten Header zu verfolgen
 
     function updateTierList() {
         fetch('http://localhost:3000/tiere')
@@ -32,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         const id = button.dataset.id;
                         deleteTier(id);
                     });
+                });
+
+                // Sortierfunktion zu den Tabellenüberschriften hinzufügen
+                headers.forEach((header, index) => {
+                    header.addEventListener('click', () => {
+                        sortTable(index, header.textContent);
+                    });
+                    header.setAttribute('title', 'Sortieren'); // Tooltip hinzufügen
                 });
             })
             .catch(error => {
@@ -98,6 +110,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    function sortTable(columnIndex, columnHeader) {
+        const table = document.getElementById('tier-table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        // Richtung für diese Spalte umschalten
+        sortDirection[columnHeader] = sortDirection[columnHeader] === 'asc' ? 'desc' : 'asc';
+        const direction = sortDirection[columnHeader];
+
+        const sortedRows = rows.sort((a, b) => {
+            let aValue = a.cells[columnIndex].textContent.trim();
+            let bValue = b.cells[columnIndex].textContent.trim();
+
+            // Zahlenvergleich, falls möglich
+            if (!isNaN(aValue) && !isNaN(bValue)) {
+                aValue = parseFloat(aValue);
+                bValue = parseFloat(bValue);
+                return (aValue - bValue) * (direction === 'asc' ? 1 : -1);
+            }
+
+            return aValue.localeCompare(bValue) * (direction === 'asc' ? 1 : -1);
+        });
+
+        // Tabelle aktualisieren
+        tbody.innerHTML = '';
+        sortedRows.forEach(row => tbody.appendChild(row));
+
+        // Hervorhebung des sortierten Headers
+        if (lastSortedHeader && lastSortedHeader !== table.rows[0].cells[columnIndex]) {
+            lastSortedHeader.classList.remove('sorted-header');
+        }
+        lastSortedHeader = table.rows[0].cells[columnIndex];
+        lastSortedHeader.classList.add('sorted-header');
+    }
 
     updateTierList();
 });

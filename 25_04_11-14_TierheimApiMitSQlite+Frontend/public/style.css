@@ -16,12 +16,12 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0.3);
+    width: 700px;
 }
 
-
-h1, h2,
+h1,
+h2,
 h3 {
     text-align: center;
     color: #ffffff;
@@ -74,7 +74,7 @@ button:hover {
 
 .delete-button {
     height: 30px;
-       
+
 }
 
 #tier-list-container {
@@ -99,6 +99,10 @@ th {
     position: sticky;
     top: 0;
     z-index: 1;
+}
+
+th:hover {
+    background-color: #d64a4a;
 }
 
 td {
@@ -132,3 +136,10 @@ td:nth-child(6) {
     text-align: right;
 }
 
+.sorted-header {
+    background-color: #d64a4a;    
+}
+
+.sorted-header:hover {
+    background-color: #dd0000; 
+}
