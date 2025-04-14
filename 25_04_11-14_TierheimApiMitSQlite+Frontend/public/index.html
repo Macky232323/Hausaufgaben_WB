@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tierheim-API</title>
+    <title>Tierklinik</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
-
+    <div class="container">
+        <h1>TIERKLINIK-TECHSTARTER</h1>
+        <br>
+        <h3>Tier hinzufügen</h3>
+        <div class="input-container">
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="art" placeholder="Art">
+            <input type="number" id="alter" placeholder="Alter">
+            <input type="text" id="krankheit" placeholder="Krankheit">
+            <input type="text" id="gewicht" placeholder="Gewicht in kg">
+            <button id="add-button">Hinzufügen</button>
+        </div>
+        <h3>Liste der Tiere</h3>
+        <div id="tier-list-container">
+            <table id="tier-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Art</th>
+                        <th>Alter</th>
+                        <th>Krankheit</th>
+                        <th>Gewicht</th>
+                        <th>X</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
+
 </html>

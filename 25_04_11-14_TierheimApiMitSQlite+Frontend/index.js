@@ -1,10 +1,13 @@
 const express = require("express")
 const app = express()
 const sqlite3 = require("sqlite3")
+const fs = require('fs');
+const cors = require('cors'); // CORS importieren
 
 // Middleware, um JSON-Daten im Request Body zu verarbeiten
 app.use(express.json())
 app.use(express.static("public"))
+app.use(cors()); // CORS für alle Routen aktivieren
 
 const db = new sqlite3.Database("tiere.db")
 
