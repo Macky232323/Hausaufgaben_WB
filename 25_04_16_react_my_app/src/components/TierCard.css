@@ -1,0 +1,37 @@
+.tier-card {
+    border: 1px solid #ddd; /* Hellere Border im Light Mode */
+    border-radius: 12px; /* Stärkere Rundung */
+    margin: 15px; /* Etwas mehr Margin */
+    padding: 20px; /* Mehr Padding innen */
+    display: flex;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stärkerer, weicherer Schatten */
+    background-color: white;
+  }
+  
+  .dark-mode .tier-card {
+    background-color: #333;
+    color: #eee;
+    border-color: #555;
+  }
+  
+  .tier-bild {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 25px; /* Mehr Abstand zum Text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Kleiner Schatten für das Bild */
+  }
+  
+  .tier-info h3 {
+    margin-top: 0;
+    margin-bottom: 10px; /* Mehr Abstand */
+    font-size: 1.5em; /* Größere Überschrift */
+  }
+  
+  .tier-info p {
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    line-height: 1.4; /* Bessere Lesbarkeit */
+  }

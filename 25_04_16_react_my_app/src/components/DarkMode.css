@@ -1,0 +1,73 @@
+.dark-mode-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0; /* Mehr vertikales Padding */
+    flex-shrink: 0; /* Verhindert Verkleinerung */
+  }
+  
+  .dark-mode-text {
+    margin-left: 15px;
+    font-size: 1.2em;
+    color: #555; /* Dunklere Farbe im Light Mode */
+  }
+  
+  .dark-mode .dark-mode-text {
+    color: #bbb; /* Hellere Farbe im Dark Mode */
+  }
+  
+  /* The switch - the box around the slider */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 70px; /* Etwas breiter */
+    height: 40px; /* Etwas höher */
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 20px; /* Stärkere Rundung */
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 32px; /* Angepasst an die Höhe */
+    width: 32px; /* Angepasst an die Breite */
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #4CAF50; /* Grün für "an" */
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 3px #4CAF50;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(30px); /* Angepasst an die Breite */
+    -ms-transform: translateX(30px);
+    transform: translateX(30px);
+  }

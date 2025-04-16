@@ -1,13 +1,38 @@
-body {
+body, html, #root, .app-container {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Schönere Schriftart */
+  background-color: #f8f8f8; /* Hellgrauer Standardhintergrund */
+  color: #333;
+  box-sizing: border-box;
+  display: flex; /* Verwende Flexbox für das Hauptlayout */
+  flex-direction: column; /* Elemente untereinander anordnen */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.light-mode {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.dark-mode {
+  background-color: #222;
+  color: #eee;
+}
+
+.tier-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Mindestbreite für Karten */
+  gap: 25px; /* Mehr Abstand zwischen den Karten */
+  overflow-y: auto;
+  margin: 30px; /* Mehr Margin um den Container */
+  padding: 25px; /* Mehr Padding innerhalb des Containers */
+  border-radius: 12px;
+  background-color: white;
+  box-sizing: border-box;
+  flex-grow: 1; /* Erlaubt dem Container zu wachsen und den verfügbaren Platz einzunehmen */
+}
+
+.dark-mode .tier-cards-container {
+  background-color: #333;
+  border-color: #555;
 }
