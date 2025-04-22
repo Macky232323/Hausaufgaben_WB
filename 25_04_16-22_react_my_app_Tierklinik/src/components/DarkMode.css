@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px 0; /* Mehr vertikales Padding */
+    padding: 10px 0; /* Mehr vertikales Padding */
     flex-shrink: 0; /* Verhindert Verkleinerung */
   }
   
@@ -20,8 +20,8 @@
   .switch {
     position: relative;
     display: inline-block;
-    width: 70px; /* Etwas breiter */
-    height: 40px; /* Etwas höher */
+    width: 70px; 
+    height: 40px;
   }
   
   /* Hide default HTML checkbox */

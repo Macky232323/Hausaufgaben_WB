@@ -2,7 +2,7 @@
     width: 100%;
     color: white;
     text-align: center;
-    padding: 60px 20px; /* Mehr vertikales Padding, weniger horizontal bei Bedarf */
+    padding: 40px 20px; /* Mehr vertikales Padding, weniger horizontal bei Bedarf */
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
@@ -19,6 +19,6 @@
   
   .titel-container h1 {
     margin: 0;
-    font-size: 3.5em; /* Noch etwas größer */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 5em; /* Noch etwas größer */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
   }

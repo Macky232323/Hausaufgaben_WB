@@ -8,7 +8,7 @@ function Titel({ darkMode }) {
 
   return (
     <div className={`titel-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-      <h1>Unsere Tiere</h1>
+      <h1>Tierklinik-Techstarter</h1>
     </div>
   );
 }

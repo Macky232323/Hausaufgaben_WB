@@ -8,7 +8,7 @@ function DarkMode({ darkMode, toggleDarkMode }) {
         <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
         <span className="slider round"></span>
       </label>
-      <span className="dark-mode-text">{darkMode ? 'Dunkelmodus' : 'Hellmodus'}</span>
+      <span className="dark-mode-text">{darkMode ? 'darkmode' : 'lightmode'}</span>
     </div>
   );
 }
