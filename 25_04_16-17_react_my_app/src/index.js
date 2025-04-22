@@ -6,6 +6,9 @@ import DarkMode from './components/DarkMode';
 import tiere from './tiere.json';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Kontakt from "./components/Kontakt";
+import About from "./components/About";
+import FAQ from "./components/FAQ";
+import Impressum from "./components/Impressum";
 import './index.css';
 
 function App() {
@@ -68,10 +71,13 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App></App>}></Route>
-        <Route path="/contact" element={<Kontakt></Kontakt>}></Route>
+        <Route path="/" element={<App />}>
+          <Route path="/kontakt" element={<Kontakt />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/impressum" element={<Impressum />} />
+        </Route>
       </Routes>
     </Router>
   </React.StrictMode>
 );
-
