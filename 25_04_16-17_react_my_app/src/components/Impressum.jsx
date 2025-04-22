@@ -2,7 +2,7 @@ import React from 'react'
 
 function Impressum() {
   return (
-    <div>Hallo aus der Kontakt Komponente</div>
+    <div>Hallo aus der Impressum Komponente</div>
   )
 }
 
