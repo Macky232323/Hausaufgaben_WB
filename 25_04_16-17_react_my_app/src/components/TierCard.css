@@ -1,17 +1,18 @@
 .tier-card {
-    border: 1px solid #ddd; /* Hellere Border im Light Mode */
-    border-radius: 12px; /* Stärkere Rundung */
-    margin: 15px; /* Etwas mehr Margin */
-    padding: 20px; /* Mehr Padding innen */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin: 15px;
+    padding: 20px;
     display: flex;
     align-items: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stärkerer, weicherer Schatten */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
     transition: transform 0.3s;
   }
 
   .tier-card:hover {
     transform: scale(1.06);
+    background-color: rgb(220, 220, 220);
   }
   
   .dark-mode .tier-card {
@@ -19,24 +20,34 @@
     color: #eee;
     border-color: #555;
   }
+
+  .dark-mode .tier-card:hover {
+    transform: scale(1.06);
+    background-color: rgb(66, 66, 66);
+  }
   
   .tier-bild {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: 25px; /* Mehr Abstand zum Text */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Kleiner Schatten für das Bild */
+    margin-right: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+
+  .tier-bild:hover {
+    transform: scale(3);
   }
   
   .tier-info h3 {
     margin-top: 0;
-    margin-bottom: 10px; /* Mehr Abstand */
-    font-size: 1.5em; /* Größere Überschrift */
+    margin-bottom: 10px;
+    font-size: 1.5em;
   }
   
   .tier-info p {
     margin-bottom: 8px;
     font-size: 1.1em;
-    line-height: 1.4; /* Bessere Lesbarkeit */
+    line-height: 1.4;
   }
