@@ -4,12 +4,15 @@ import Titel from './components/Titel';
 import TierCard from './components/TierCard';
 import DarkMode from './components/DarkMode';
 import tiere from './tiere.json';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import Kontakt from "./components/Kontakt";
 import './index.css';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [geladeneTiere, setGeladeneTiere] = useState([]);
-  const [anzahlGeladen, setAnzahlGeladen] = useState(15);
+  const [anzahlGeladen, setAnzahlGeladen] = useState(6);
   const tierCardsContainerRef = useRef(null);
 
   const toggleDarkMode = () => {
@@ -31,7 +34,7 @@ function App() {
           container.scrollHeight - 200 && // Kleinerer Puffer, da wir im Container scrollen
           anzahlGeladen < tiere.length
         ) {
-          setAnzahlGeladen(vorherigerAnzahl => vorherigerAnzahl + 15);
+          setAnzahlGeladen(vorherigerAnzahl => vorherigerAnzahl + 6);
         }
       }
     };
@@ -64,6 +67,16 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route path="/" element={<App></App>}></Route>
+        <Route path="/contact" element={<Kontakt></Kontakt>}></Route>
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
