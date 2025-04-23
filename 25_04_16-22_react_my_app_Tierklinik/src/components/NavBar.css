@@ -1,0 +1,53 @@
+.nav-bar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* Deutlicherer Hintergrund */
+    background-color: rgba(255, 255, 255, 0.6); /* Erhöhte Deckkraft im Light Mode */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Leichter Schatten für Abhebung */
+    padding: 10px 0;
+   }
+  
+   .nav-button {
+    color: #333; /* Dunklere Textfarbe im Light Mode */
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s; /* Farbe hinzufügen */
+   }
+  
+   .nav-button:hover {
+    background-color: rgba(220, 220, 220, 0.6); /* Etwas dunklerer Hover-Effekt */
+    transform: scale(1.05);
+    color: #111; /* Noch dunklere Textfarbe beim Hovern */
+   }
+  
+   .nav-button.active {
+    background-color: rgba(200, 200, 200, 0.8); /* Noch dunkler für aktiven Link */
+    color: #000; /* Schwarze Textfarbe für aktiven Link */
+    font-weight: bold; /* Fett darstellen */
+   }
+  
+   .dark-mode .nav-bar {
+    /* Deutlicherer Hintergrund im Dark Mode */
+    background-color: rgba(0, 0, 0, 0.8); /* Erhöhte Deckkraft im Dark Mode */
+    box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.2); /* Leichter Schatten für Abhebung */
+   }
+  
+   .dark-mode .nav-button {
+    color: #eee; /* Hellere Textfarbe im Dark Mode */
+   }
+  
+   .dark-mode .nav-button:hover {
+    background-color: rgba(50, 50, 50, 0.6); /* Etwas hellerer Hover-Effekt */
+    color: #fff; /* Noch hellere Textfarbe beim Hovern */
+   }
+  
+   .dark-mode .nav-button.active {
+    background-color: rgba(70, 70, 70, 0.6); /* Noch heller für aktiven Link */
+    color: #fff; /* Weiße Textfarbe für aktiven Link */
+    font-weight: bold; /* Fett darstellen */
+   }
