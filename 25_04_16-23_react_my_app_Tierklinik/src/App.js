@@ -6,7 +6,6 @@ import React, { useState, useEffect, useRef } from 'react';
  import About from './components/About';
  import FAQ from './components/FAQ';
  import Impressum from './components/Impressum';
- import tiere from './tiere.json';
  import DarkMode from './components/DarkMode';
  import './index.css';
  
@@ -15,6 +14,7 @@ import React, { useState, useEffect, useRef } from 'react';
   const [darkMode, setDarkMode] = useState(false);
   const [geladeneTiere, setGeladeneTiere] = useState([]);
   const [anzahlGeladen, setAnzahlGeladen] = useState(6);
+  const [gesamtAnzahlTiere, setGesamtAnzahlTiere] = useState(0); // Neu: Gesamtzahl der Tiere
   const contentRef = useRef(null);
   const location = useLocation();
   let containerClass = "scrollable-content";
@@ -30,8 +30,15 @@ import React, { useState, useEffect, useRef } from 'react';
 
   useEffect(() => {
   if (isTierPatientenPage) {
-  const initialTiere = tiere.slice(0, anzahlGeladen);
+  // Daten von der API abrufen
+  fetch('http://localhost:3001/tiere')
+  .then(response => response.json())
+  .then(data => {
+  setGesamtAnzahlTiere(data.length); // Setze die Gesamtzahl
+  const initialTiere = data.slice(0, anzahlGeladen);
   setGeladeneTiere(initialTiere);
+  })
+  .catch(error => console.error('Fehler beim Laden der Daten:', error));
   } else {
   setGeladeneTiere([]);
   setAnzahlGeladen(6);
@@ -47,9 +54,16 @@ import React, { useState, useEffect, useRef } from 'react';
   if (
   container.scrollTop + container.clientHeight >=
   container.scrollHeight - 200 &&
-  anzahlGeladen < tiere.length
+  geladeneTiere.length < gesamtAnzahlTiere // Verwende gesamtAnzahlTiere
   ) {
   setAnzahlGeladen(vorherigerAnzahl => vorherigerAnzahl + 6);
+  fetch('http://localhost:3001/tiere')
+  .then(response => response.json())
+  .then(data => {
+  const neueTiere = data.slice(geladeneTiere.length, geladeneTiere.length + 6);
+  setGeladeneTiere([...geladeneTiere, ...neueTiere]);
+  })
+  .catch(error => console.error('Fehler beim Laden weiterer Daten:', error));
   }
   }
   };
@@ -67,7 +81,7 @@ import React, { useState, useEffect, useRef } from 'react';
   }
   };
   }
-  }, [anzahlGeladen, tiere.length, isTierPatientenPage]);
+  }, [geladeneTiere.length, gesamtAnzahlTiere, isTierPatientenPage]); // Verwende geladeneTiere.length und gesamtAnzahlTiere
  
 
   let content;
