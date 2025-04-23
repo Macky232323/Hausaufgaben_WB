@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
  import ReactDOM from 'react-dom/client';
  import Titel from './components/Titel';
  import TierCard from './components/TierCard';
- import DarkMode from './components/DarkMode';
  import tiere from './tiere.json';
  import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
  import Kontakt from "./components/Kontakt";
@@ -62,13 +61,12 @@ import React, { useState, useEffect, useRef } from 'react';
 
   return (
   <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-  <Titel darkMode={darkMode} />
+  <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />  {/* Übergib die Funktionen */}
   <div className="tier-cards-container" ref={tierCardsContainerRef}>
   {geladeneTiere.map((tier, index) => (
   <TierCard key={index} {...tier} />
   ))}
   </div>
-  <DarkMode darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
   </div>
   );
  }
@@ -79,7 +77,7 @@ import React, { useState, useEffect, useRef } from 'react';
   <React.StrictMode>
   <Router>
   <Routes>
-  <Route path="/" element={<App />} />  {/* App ist jetzt eine eigenständige Route */}
+  <Route path="/" element={<App />} />
   <Route path="/kontakt" element={<Kontakt />} />
   <Route path="/about" element={<About />} />
   <Route path="/faq" element={<FAQ />} />

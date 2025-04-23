@@ -2,11 +2,12 @@ import React from 'react';
  import { NavLink } from 'react-router-dom';
  import './Titel.css';
  import './NavBar.css';
+ import DarkMode from './DarkMode'; // Importiere DarkMode
  import bg_hell from '../assets/bg_hell.jpg';
  import bg_dunkel from '../assets/bg_dunkel.jpg';
  
 
- function Titel({ darkMode }) {
+ function Titel({ darkMode, toggleDarkMode }) {  // Erwarte toggleDarkMode als Prop
   const backgroundImage = darkMode ? bg_dunkel : bg_hell;
  
 
@@ -19,6 +20,7 @@ import React from 'react';
   <NavLink to="/kontakt" className="nav-button" activeClassName="active">Kontakt</NavLink>
   <NavLink to="/faq" className="nav-button" activeClassName="active">FAQ</NavLink>
   <NavLink to="/impressum" className="nav-button" activeClassName="active">Impressum</NavLink>
+  <DarkMode darkMode={darkMode} toggleDarkMode={toggleDarkMode} />  {/* Füge DarkMode hier hinzu */}
   </nav>
   <h1>Tierklinik-Techstarter</h1>
   </div>
