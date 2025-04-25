@@ -110,3 +110,7 @@
    .dark-mode .back-button:hover {
     background-color: #666;
    }
+
+   .tier-card * {
+    pointer-events: none;
+}

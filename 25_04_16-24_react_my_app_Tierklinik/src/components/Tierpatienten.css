@@ -1,0 +1,5 @@
+.tierpatienten-container {
+    overflow-y: auto;
+    height: 80vh; /* Oder eine andere geeignete Höhe */
+    position: relative;
+   }

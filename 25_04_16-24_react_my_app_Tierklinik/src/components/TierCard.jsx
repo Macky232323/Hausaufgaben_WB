@@ -2,9 +2,11 @@ import React from 'react';
  import { useNavigate } from 'react-router-dom';
  import './TierCard.css';
  
+
  function TierCard({ name, art, krankheit, alter, gewicht, bild, id }) {
   const navigate = useNavigate();
  
+
   return (
   <div className="tier-card" onClick={() => navigate(`/tiere/${id}`)}>
   <img src={`/assets/${bild}`} alt={name} className="tier-bild" />
@@ -19,4 +21,5 @@ import React from 'react';
   );
  }
  
+
  export default TierCard;
