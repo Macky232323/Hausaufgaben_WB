@@ -9,34 +9,29 @@ import React, { useState, useEffect, useRef } from 'react';
  import DarkMode from './components/DarkMode';
  import './index.css';
  
-
  function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [geladeneTiere, setGeladeneTiere] = useState([]);
   const [anzahlGeladen, setAnzahlGeladen] = useState(6);
-  const [gesamtAnzahlTiere, setGesamtAnzahlTiere] = useState(0); // Neu: Gesamtzahl der Tiere
+  const [gesamtAnzahlTiere, setGesamtAnzahlTiere] = useState(0);
   const contentRef = useRef(null);
   const location = useLocation();
   let containerClass = "scrollable-content";
  
-
   const toggleDarkMode = () => {
   setDarkMode(!darkMode);
   };
  
-
   const isTierPatientenPage = location.pathname === '/tierpatienten';
  
-
   useEffect(() => {
   if (isTierPatientenPage) {
-  // Daten von der API abrufen
   fetch('http://localhost:3001/tiere')
   .then(response => response.json())
   .then(data => {
-  setGesamtAnzahlTiere(data.length); // Setze die Gesamtzahl
+  setGesamtAnzahlTiere(data.length);
   const initialTiere = data.slice(0, anzahlGeladen);
-  setGeladeneTiere(initialTiere);
+  setGeladeneTiere(initialTiere);  // Verwende die Daten direkt, die jetzt 'id' enthalten sollten
   })
   .catch(error => console.error('Fehler beim Laden der Daten:', error));
   } else {
@@ -45,7 +40,6 @@ import React, { useState, useEffect, useRef } from 'react';
   }
   }, [anzahlGeladen, isTierPatientenPage]);
  
-
   useEffect(() => {
   if (isTierPatientenPage) {
   const handleScroll = () => {
@@ -54,36 +48,33 @@ import React, { useState, useEffect, useRef } from 'react';
   if (
   container.scrollTop + container.clientHeight >=
   container.scrollHeight - 200 &&
-  geladeneTiere.length < gesamtAnzahlTiere // Verwende gesamtAnzahlTiere
+  geladeneTiere.length < gesamtAnzahlTiere
   ) {
   setAnzahlGeladen(vorherigerAnzahl => vorherigerAnzahl + 6);
   fetch('http://localhost:3001/tiere')
   .then(response => response.json())
   .then(data => {
   const neueTiere = data.slice(geladeneTiere.length, geladeneTiere.length + 6);
-  setGeladeneTiere([...geladeneTiere, ...neueTiere]);
+  setGeladeneTiere([...geladeneTiere, ...neueTiere]); // Verwende die Daten direkt
   })
   .catch(error => console.error('Fehler beim Laden weiterer Daten:', error));
   }
   }
   };
  
-
   const containerElement = contentRef.current;
   if (containerElement) {
   containerElement.addEventListener('scroll', handleScroll);
   }
  
-
   return () => {
   if (containerElement) {
   containerElement.removeEventListener('scroll', handleScroll);
   }
   };
   }
-  }, [geladeneTiere.length, gesamtAnzahlTiere, isTierPatientenPage]); // Verwende geladeneTiere.length und gesamtAnzahlTiere
+  }, [geladeneTiere.length, gesamtAnzahlTiere, isTierPatientenPage]);
  
-
   let content;
   switch (location.pathname) {
   case "/":
@@ -134,7 +125,7 @@ import React, { useState, useEffect, useRef } from 'react';
   content = (
   <div className="tier-cards-container">
   {geladeneTiere.map((tier, index) => (
-  <TierCard key={index} {...tier} />
+  <TierCard key={tier.id} {...tier} />  // Verwende tier.id direkt
   ))}
   </div>
   );
@@ -156,7 +147,6 @@ import React, { useState, useEffect, useRef } from 'react';
   content = <div>404 - Seite nicht gefunden</div>;
   }
  
-
   return (
   <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
   <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
@@ -167,5 +157,4 @@ import React, { useState, useEffect, useRef } from 'react';
   );
  }
  
-
  export default App;
