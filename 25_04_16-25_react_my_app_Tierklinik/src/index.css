@@ -43,13 +43,11 @@ body, html, #root, .app-container {
  .scrollable-content {
   flex-grow: 1;
   overflow-y: auto;
-  /* Zusätzliches Styling für den scrollbaren Bereich */
   padding: 20px;
   box-sizing: border-box;
  }
  
 
- /* Stile für die anderen Seiteninhalte (optional) */
  .scrollable-content > div,
  .scrollable-content > .kontakt-container,
  .scrollable-content > .about-container,

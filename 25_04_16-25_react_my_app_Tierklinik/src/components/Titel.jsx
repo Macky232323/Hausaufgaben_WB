@@ -7,7 +7,7 @@ import React from 'react';
  import bg_dunkel from '../assets/bg_dunkel.jpg';
  
 
- function Titel({ darkMode, toggleDarkMode }) {  // Erwarte toggleDarkMode
+ function Titel({ darkMode, toggleDarkMode }) {
   const backgroundImage = darkMode ? bg_dunkel : bg_hell;
  
 

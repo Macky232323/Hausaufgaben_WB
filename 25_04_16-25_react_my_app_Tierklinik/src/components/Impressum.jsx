@@ -1,5 +1,5 @@
 import React from 'react';
- import './Impressum.css'; // Importiere die CSS-Datei
+ import './Impressum.css';
  
 
  function Impressum() {

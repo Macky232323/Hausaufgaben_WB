@@ -1,5 +1,5 @@
 import React from 'react';
- import './FAQ.css'; // Importiere die CSS-Datei
+ import './FAQ.css';
  
 
  function FAQ() {

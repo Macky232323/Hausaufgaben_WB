@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
- import { useLocation, Routes, Route } from 'react-router-dom';  // Importiere Routes und Route
+ import { useLocation, Routes, Route } from 'react-router-dom';
  import Titel from './components/Titel';
  import TierCard from './components/TierCard';
  import Kontakt from './components/Kontakt';
@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
  import FAQ from './components/FAQ';
  import Impressum from './components/Impressum';
  import DarkMode from './components/DarkMode';
- import TierDetail from './components/TierDetail'; // Importiere TierDetail
+ import TierDetail from './components/TierDetail';
  import './index.css';
  
  function App() {
@@ -32,7 +32,7 @@ import React, { useState, useEffect, useRef } from 'react';
   .then(data => {
   setGesamtAnzahlTiere(data.length);
   const initialTiere = data.slice(0, anzahlGeladen);
-  setGeladeneTiere(initialTiere);  // Verwende die Daten direkt, die jetzt 'id' enthalten sollten
+  setGeladeneTiere(initialTiere);
   })
   .catch(error => console.error('Fehler beim Laden der Daten:', error));
   } else {
@@ -56,7 +56,7 @@ import React, { useState, useEffect, useRef } from 'react';
   .then(response => response.json())
   .then(data => {
   const neueTiere = data.slice(geladeneTiere.length, geladeneTiere.length + 6);
-  setGeladeneTiere([...geladeneTiere, ...neueTiere]); // Verwende die Daten direkt
+  setGeladeneTiere([...geladeneTiere, ...neueTiere]);
   })
   .catch(error => console.error('Fehler beim Laden weiterer Daten:', error));
   }
@@ -126,7 +126,7 @@ import React, { useState, useEffect, useRef } from 'react';
   content = (
   <div className="tier-cards-container">
   {geladeneTiere.map((tier, index) => (
-  <TierCard key={tier.id} {...tier} />  // Verwende tier.id direkt
+  <TierCard key={tier.id} {...tier} />
   ))}
   </div>
   );
@@ -152,10 +152,10 @@ import React, { useState, useEffect, useRef } from 'react';
   <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
   <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
   <div className={containerClass} ref={contentRef}>
-  <Routes> {/* Verwende Routes um die Routen zu definieren */}
+  <Routes>
   <Route path="/" element={content} />
   <Route path="/tierpatienten" element={content} />
-  <Route path="/tiere/:id" element={<TierDetail />} /> {/* Neue Route für Tierdetails */}
+  <Route path="/tiere/:id" element={<TierDetail />} />
   <Route path="/kontakt" element={<Kontakt />} />
   <Route path="/about" element={<About />} />
   <Route path="/faq" element={<FAQ />} />

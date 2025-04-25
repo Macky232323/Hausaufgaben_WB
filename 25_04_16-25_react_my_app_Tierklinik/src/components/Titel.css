@@ -7,10 +7,10 @@
   background-position: center;
   box-sizing: border-box;
   flex-shrink: 0;
-  position: relative; /* Hinzugefügt */
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Zentriert den Inhalt vertikal */
+  justify-content: center;
  }
 
  .titel-container.light-mode {

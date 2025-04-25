@@ -9,7 +9,7 @@ import React from 'react';
   <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
   <span className="slider round"></span>
   </label>
-  <span className="dark-mode-text">{darkMode ? 'Dunkel' : 'Hell'}</span>  {/* Angepasster Text */}
+  <span className="dark-mode-text">{darkMode ? 'Dunkel' : 'Hell'}</span>
   </div>
   );
  }

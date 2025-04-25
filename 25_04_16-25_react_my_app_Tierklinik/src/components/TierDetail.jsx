@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './TierDetail.css'; // Erstelle diese CSS-Datei
+import './TierDetail.css';
 
 function TierDetail() {
  const { id } = useParams();
@@ -31,11 +31,11 @@ function TierDetail() {
        if (!response.ok) {
          throw new Error('Fehler beim Laden der Anamnese');
        }
-       return response.text(); // Oder .json(), falls die API JSON zurückgibt
+       return response.text();
      })
      .then(text => setAnamnese(text))
      .catch(err => setError(err.message))
-     .finally(() => setLoading(false)); // Oder ein separater setLoading für Anamnese
+     .finally(() => setLoading(false));
  }, [id]);
 
  if (loading) {
@@ -63,7 +63,7 @@ function TierDetail() {
          </tr>
          <tr>
            <th>Alter</th>
-           <td>{tier.age}</td>  {/* Ändere 'alter' zu 'age' */}
+           <td>{tier.age}</td>
          </tr>
          <tr>
            <th>Gewicht</th>

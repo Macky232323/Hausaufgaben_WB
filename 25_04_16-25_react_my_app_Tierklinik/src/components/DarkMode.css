@@ -4,13 +4,13 @@
   justify-content: center;
   padding: 10px 0;
   flex-shrink: 0;
-  margin-left: 20px; /* Füge margin-left hinzu, um es nach rechts zu schieben */
+  margin-left: 20px;
  }
  
 
  .dark-mode-text {
   margin-left: 10px;
-  font-size: 1.1em;  /* Angepasst an die Navbar */
+  font-size: 1.1em;
   color: #555;
  }
  
@@ -23,8 +23,8 @@
  .switch {
   position: relative;
   display: inline-block;
-  width: 60px;  /* Etwas kleiner */
-  height: 34px;  /* Etwas kleiner */
+  width: 60px;  
+  height: 34px;
  }
  
 
@@ -52,8 +52,8 @@
  .slider:before {
   position: absolute;
   content: "";
-  height: 26px; /* Etwas kleiner */
-  width: 26px; /* Etwas kleiner */
+  height: 26px; 
+  width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
@@ -74,7 +74,7 @@
  
 
  input:checked + .slider:before {
-  -webkit-transform: translateX(26px); /* Etwas kleiner */
+  -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
  }

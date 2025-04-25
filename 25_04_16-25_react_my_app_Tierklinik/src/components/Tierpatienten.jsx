@@ -43,7 +43,7 @@ function Tierpatienten() {
      <h1>Tierpatienten</h1>
      <div className="tier-grid">
        {tiere.map(tier => (
-         <TierCard key={tier.id} {...tier} /> // Hier werden die Tierdaten an TierCard übergeben
+         <TierCard key={tier.id} {...tier} />
        ))}
      </div>
    </div>
