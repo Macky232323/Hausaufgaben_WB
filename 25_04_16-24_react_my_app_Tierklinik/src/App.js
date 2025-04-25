@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
- import { useLocation } from 'react-router-dom';
+ import { useLocation, Routes, Route } from 'react-router-dom';  // Importiere Routes und Route
  import Titel from './components/Titel';
  import TierCard from './components/TierCard';
  import Kontakt from './components/Kontakt';
@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
  import FAQ from './components/FAQ';
  import Impressum from './components/Impressum';
  import DarkMode from './components/DarkMode';
+ import TierDetail from './components/TierDetail'; // Importiere TierDetail
  import './index.css';
  
  function App() {
@@ -151,7 +152,15 @@ import React, { useState, useEffect, useRef } from 'react';
   <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
   <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
   <div className={containerClass} ref={contentRef}>
-  {content}
+  <Routes> {/* Verwende Routes um die Routen zu definieren */}
+  <Route path="/" element={content} />
+  <Route path="/tierpatienten" element={content} />
+  <Route path="/tiere/:id" element={<TierDetail />} /> {/* Neue Route für Tierdetails */}
+  <Route path="/kontakt" element={<Kontakt />} />
+  <Route path="/about" element={<About />} />
+  <Route path="/faq" element={<FAQ />} />
+  <Route path="/impressum" element={<Impressum />} />
+  </Routes>
   </div>
   </div>
   );

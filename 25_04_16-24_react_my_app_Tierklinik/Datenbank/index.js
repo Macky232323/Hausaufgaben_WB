@@ -31,6 +31,15 @@ const express = require("express")
   //db.run(`INSERT INTO tiere(art,name,krankheit,age,gewicht,bild) VALUES ("Hase","Hoppel","schnupfen","1","1.8","hoppel.jpg")`)
  
 
+  db.run(`
+  CREATE TABLE IF NOT EXISTS anamnese (
+  tier_id INTEGER PRIMARY KEY,  -- Assuming a 1:1 relationship for simplicity
+  text TEXT,
+  FOREIGN KEY (tier_id) REFERENCES tiere(id)
+  );
+  `);
+ 
+
   selectAllTiereQuery = `SELECT * FROM tiere`
   db.all(selectAllTiereQuery, (err,rows) => {
   if(err){
@@ -158,6 +167,7 @@ const express = require("express")
   return res.status(400).send("Fehler: Es wurden keine Felder zum Aktualisieren im Request Body gefunden.");
   }
  
+ 
 
   const updateQuery = `UPDATE tiere SET ${updateFields.join(", ")} WHERE id = ?`;
   updateValues.push(id);
@@ -191,6 +201,24 @@ const express = require("express")
   return res.status(404).send(`Tier mit der ID ${id} nicht gefunden.`);
   }
   res.send(`Tier mit der ID ${id} wurde erfolgreich gelöscht.`);
+  });
+ });
+ 
+
+ app.get("/Anamnese/:id", (req, res) => {
+  const id = req.params.id;
+  const selectAnamneseQuery = `SELECT text FROM anamnese WHERE tier_id = ?`;  // Adjust if anamnese is in 'tiere'
+ 
+
+  db.get(selectAnamneseQuery, [id], (err, row) => {
+  if (err) {
+  console.error(err);
+  return res.status(500).send("Fehler beim Abrufen der Anamnese aus der Datenbank.");
+  }
+  if (!row) {
+  return res.status(404).send(`Anamnese für Tier mit der ID ${id} nicht gefunden.`);
+  }
+  res.send(row.text);  // Or res.json(row) if you send more than just the text
   });
  });
  
