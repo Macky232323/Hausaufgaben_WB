@@ -58,6 +58,7 @@ const express = require("express");
  // Helper to run database operations with error handling
  const runDbOperation = async (query, params = []) => {
   try {
+  // Use db.run for INSERT, UPDATE, DELETE
   return await db.run(query, params);
   } catch (err) {
   console.error(`Database error for query "${query}" with params ${JSON.stringify(params)}:`, err.message);
@@ -67,6 +68,7 @@ const express = require("express");
 
  const getDbOperation = async (query, params = []) => {
   try {
+   // Use db.get for selecting a single row
   return await db.get(query, params);
   } catch (err) {
   console.error(`Database error for query "${query}" with params ${JSON.stringify(params)}:`, err.message);
@@ -76,6 +78,7 @@ const express = require("express");
 
  const allDbOperation = async (query, params = []) => {
   try {
+  // Use db.all for selecting multiple rows
   return await db.all(query, params);
   } catch (err) {
   console.error(`Database error for query "${query}" with params ${JSON.stringify(params)}:`, err.message);
@@ -153,8 +156,6 @@ const express = require("express");
   query += ` ORDER BY ${sortParam} ASC`;
   } else {
   console.warn(`Invalid sort parameter: ${req.query.sort}`);
-  // Optional: return 400 for invalid sort
-  // return res.status(400).send("Ungültiger Sortierparameter.");
   }
   }
 
@@ -224,7 +225,9 @@ const express = require("express");
   );
 
   await runDbOperation('COMMIT');
-  res.status(201).json({ id: tierId, message: `Tier mit ID ${tierId} erfolgreich hinzugefügt.` });
+  // Fetch the newly created tier to return it
+  const newTier = await getDbOperation('SELECT * FROM tiere WHERE id = ?', [tierId]);
+  res.status(201).json(newTier); // Send back the created animal data
 
   } catch (err) {
   await runDbOperation('ROLLBACK');
@@ -237,7 +240,7 @@ const express = require("express");
  // PUT update animal by ID
  app.put("/tiere/:id", upload.single('bild'), async (req, res, next) => {
   const id = req.params.id;
-  const { art, name, krankheit, age, gewicht, anamnese, oldBild } = req.body;
+  const { art, name, krankheit, age, gewicht, anamnese, oldBild } = req.body; // oldBild wird jetzt vom Frontend mitgesendet
   const newBildFile = req.file;
   let updatedTierData = {};
   let oldBildPathToDelete = null;
@@ -310,54 +313,96 @@ const express = require("express");
  });
 
 
- // DELETE animal by ID
+ // DELETE animal by ID (mit explizitem Anamnese-Delete)
  app.delete("/tiere/:id", async (req, res, next) => {
-  const id = req.params.id;
-  let imagePathToDelete = null;
-
-  try {
-  // Get current image filename *before* starting transaction
-  const tier = await getDbOperation('SELECT bild FROM tiere WHERE id = ?', [id]);
-  if (!tier) {
-  return res.status(404).send(`Tier mit der ID ${id} nicht gefunden.`);
-  }
-  if (tier.bild && tier.bild !== DEFAULT_IMAGE) {
-  imagePathToDelete = path.join(UPLOAD_DIR, tier.bild);
-  }
-
-  // Transaction for deletion (Anamnese is deleted via CASCADE)
-  await runDbOperation('BEGIN TRANSACTION');
-  const result = await runDbOperation('DELETE FROM tiere WHERE id = ?', [id]);
-  await runDbOperation('COMMIT');
-
-  if (result.changes === 0) {
-  // Should have been caught by the check above, but for safety
-  return res.status(404).send(`Tier mit der ID ${id} konnte nicht gelöscht werden (nicht gefunden).`);
-  }
-
-  // Delete image file *after* successful commit
-  if (imagePathToDelete) {
-  await deleteFileIfExists(imagePathToDelete);
-  }
-
-  res.status(200).send(`Tier mit der ID ${id} erfolgreich gelöscht.`);
-
-  } catch (err) {
-  // Rollback might fail if the error occurred before BEGIN, but try anyway
-  try { await runDbOperation('ROLLBACK'); } catch (rbErr) { console.error("Rollback failed:", rbErr);}
-  next(err);
-  }
- });
+    const id = req.params.id;
+    console.log(`--- DELETE /tiere/${id} received ---`); // Log entry point
+    let imagePathToDelete = null;
+    let transactionStarted = false; // Flag für Rollback
+  
+    try {
+    // Get current image filename
+    console.log(`[DELETE ${id}] Checking if tier exists...`);
+    const tier = await getDbOperation('SELECT bild FROM tiere WHERE id = ?', [id]);
+  
+    if (!tier) {
+    console.log(`[DELETE ${id}] Tier not found.`);
+    return res.status(404).send(`Tier mit der ID ${id} nicht gefunden.`);
+    }
+    console.log(`[DELETE ${id}] Tier found. Bild: ${tier.bild}`);
+  
+    if (tier.bild && tier.bild !== DEFAULT_IMAGE) {
+    imagePathToDelete = path.join(UPLOAD_DIR, tier.bild);
+    console.log(`[DELETE ${id}] Will attempt to delete image: ${imagePathToDelete}`);
+    }
+  
+    // Begin Transaction
+    console.log(`[DELETE ${id}] Beginning transaction...`);
+    await db.run('BEGIN TRANSACTION');
+    transactionStarted = true;
+  
+    // ***** NEU: Explizit Anamnese löschen *****
+    console.log(`[DELETE ${id}] Deleting related anamnese entry (if exists)...`);
+    // Wir ignorieren Fehler hier, falls keine Anamnese existiert (result.changes wäre 0)
+    await db.run('DELETE FROM anamnese WHERE tier_id = ?', [id]);
+    console.log(`[DELETE ${id}] Anamnese delete attempted.`);
+    // ***** ENDE NEU *****
+  
+    // Execute DELETE für das Tier selbst
+    console.log(`[DELETE ${id}] Executing DELETE query for tier...`);
+    const result = await db.run('DELETE FROM tiere WHERE id = ?', [id]); // Verwende db.run direkt
+    console.log(`[DELETE ${id}] Tier DELETE query result changes: ${result.changes}`);
+  
+    if (result.changes === 0) {
+          console.warn(`[DELETE ${id}] Tier existed before transaction but DELETE reported 0 changes. Rolling back.`);
+          await db.run('ROLLBACK'); // Rollback explicit
+          transactionStarted = false;
+          return res.status(404).send(`Tier mit der ID ${id} konnte nicht gelöscht werden (nicht gefunden während Transaktion).`);
+     }
+  
+    // Commit Transaction
+    console.log(`[DELETE ${id}] Committing transaction...`);
+    await db.run('COMMIT'); // Verwende db.run direkt
+    transactionStarted = false; // Commit successful, no rollback needed
+    console.log(`[DELETE ${id}] Transaction committed.`);
+  
+    // Delete image file *after* successful commit
+    if (imagePathToDelete) {
+    console.log(`[DELETE ${id}] Deleting image file...`);
+    await deleteFileIfExists(imagePathToDelete);
+    }
+  
+    console.log(`[DELETE ${id}] Operation successful.`);
+    res.status(200).send(`Tier mit der ID ${id} erfolgreich gelöscht.`);
+  
+    } catch (err) {
+    console.error(`[DELETE ${id}] Error during delete process:`, err.message);
+    // Rollback if transaction was started and commit likely failed
+    if (transactionStarted) {
+    try {
+    console.log(`[DELETE ${id}] Attempting rollback due to error...`);
+    await db.run('ROLLBACK'); // Verwende db.run direkt
+    console.log(`[DELETE ${id}] Rollback successful.`);
+    } catch (rbErr) {
+    console.error(`[DELETE ${id}] Rollback failed:`, rbErr.message);
+    }
+    }
+    // Forward error to the global handler, create a standard error if needed
+    const errorToSend = new Error(err.message || 'Datenbankfehler');
+    errorToSend.status = err.status || 500; // Preserve status if available
+    next(errorToSend);
+    }
+   });
 
 
  // --- Global Error Handler ---
  app.use((err, req, res, next) => {
   console.error("Unhandled error:", err.stack || err.message || err); // Log the full error stack
-  // Avoid sending detailed error messages to the client in production
   const statusCode = err.status || 500;
+  // Sende generische Nachricht im Produktionsmodus für 500er Fehler
   const message = (statusCode === 500 && process.env.NODE_ENV === 'production')
   ? 'Ein interner Serverfehler ist aufgetreten.'
-  : err.message || 'Ein unbekannter Fehler ist aufgetreten.';
+  : err.message || 'Ein unbekannter Fehler ist aufgetreten.'; // Behalte spezifische Nachrichten für andere Fehler
   res.status(statusCode).send(message);
  });
 

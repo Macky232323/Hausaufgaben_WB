@@ -40,8 +40,18 @@ import React, { useState } from 'react';
 
   try {
   const response = await addTier(dataToSend); // Verwende API-Funktion
-  alert(response.data); // Zeige Erfolgsmeldung vom Backend
-  navigate('/tierpatienten'); // Zurück zur Tierliste
+
+  const newTierData = response.data;
+  if (newTierData && newTierData.id && newTierData.name) {
+  alert(`Tier ${newTierData.id} - ${newTierData.name} erfolgreich hinzugefügt!`);
+  } else {
+  alert('Tier erfolgreich hinzugefügt!');
+  console.warn("Antwort vom Backend beim Hinzufügen enthielt nicht id und name:", newTierData);
+  }
+
+  // Navigiere zurück zur Liste und signalisiere Refresh
+  navigate('/tierpatienten', { state: { refresh: true } });
+
   } catch (err) {
   console.error("Fehler beim Hinzufügen:", err);
   setError(err.response?.data || err.message || 'Fehler beim Hinzufügen des Tiers.');
@@ -58,35 +68,36 @@ import React, { useState } from 'react';
   <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required />
 
   <label htmlFor="art">Art:</label>
- <input type="text" id="art" name="art" value={formData.art} onChange={handleInputChange} required />
+  <input type="text" id="art" name="art" value={formData.art} onChange={handleInputChange} required />
 
- <label htmlFor="age">Alter:</label>
- <input type="text" id="age" name="age" value={formData.age} onChange={handleInputChange} required />
+  <label htmlFor="age">Alter:</label>
+  <input type="text" id="age" name="age" value={formData.age} onChange={handleInputChange} required />
 
- <label htmlFor="gewicht">Gewicht:</label>
- <input type="text" id="gewicht" name="gewicht" value={formData.gewicht} onChange={handleInputChange} required />
+  <label htmlFor="gewicht">Gewicht:</label>
+  <input type="text" id="gewicht" name="gewicht" value={formData.gewicht} onChange={handleInputChange} required />
 
- <label htmlFor="krankheit">Krankheit:</label>
- <input type="text" id="krankheit" name="krankheit" value={formData.krankheit} onChange={handleInputChange} required />
+  <label htmlFor="krankheit">Krankheit:</label>
+  <input type="text" id="krankheit" name="krankheit" value={formData.krankheit} onChange={handleInputChange} required />
 
- <label htmlFor="bild">Bild:</label>
- <input type="file" id="bild" name="bild" accept="image/*" onChange={handleBildChange} required />
+  <label htmlFor="bild">Bild:</label>
+  <input type="file" id="bild" name="bild" accept="image/*" onChange={handleBildChange} required />
 
- <label htmlFor="anamnese">Anamnese:</label>
- <textarea id="anamnese" name="anamnese" value={formData.anamnese} onChange={handleInputChange} required></textarea>
+  <label htmlFor="anamnese">Anamnese:</label>
+  <textarea id="anamnese" name="anamnese" value={formData.anamnese} onChange={handleInputChange} required></textarea>
 
- <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}> {/* Button Container */}
- <button type="submit" className="save-button" disabled={loading}>
- {loading ? 'Speichern...' : 'Tier Hinzufügen'}
- </button>
- <Link to="/tierpatienten" className="cancel-button" style={{ textDecoration: 'none' }}>
- Abbrechen
- </Link>
- </div>
- {error && <p className="error-message">{error}</p>}
- </form>
- </div>
- );
-}
+  <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}> {/* Button Container */}
+   {/* Text kleingeschrieben */}
+  <button type="submit" className="save-button" disabled={loading}>
+  {loading ? 'Speichern...' : 'Tier hinzufügen'}
+  </button>
+  <Link to="/tierpatienten" className="cancel-button" style={{ textDecoration: 'none' }}>
+  Abbrechen
+  </Link>
+  </div>
+  {error && <p className="error-message">{error}</p>}
+  </form>
+  </div>
+  );
+ }
 
-export default TierHinzufuegen;
+ export default TierHinzufuegen;

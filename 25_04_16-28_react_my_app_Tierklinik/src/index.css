@@ -2,57 +2,73 @@ body, html, #root, .app-container {
   height: 100%;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #eeeded;
+  background-color: #eeeded; /* Standard-Hintergrund für light mode */
   color: #333;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
  }
- 
 
  .light-mode {
   background-color: #f8f8f8;
   color: #333;
  }
- 
 
  .dark-mode {
   background-color: #222;
   color: #eee;
  }
- 
 
+ /* Container für die Tierkarten (innerhalb von .scrollable-content) */
  .tier-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 25px;
-  margin: 30px;
-  padding: 25px;
+  padding: 25px; /* Padding innerhalb der Karten-Liste */
   border-radius: 12px;
-  background-color: white;
+  background-color: white; /* Heller Hintergrund für Kartenbereich */
   box-sizing: border-box;
  }
- 
 
+ /* Dark Mode für den Kartenbereich */
  .dark-mode .tier-cards-container {
-  background-color: #333;
-  border-color: #555;
+  background-color: #333; /* Dunklerer Hintergrund für Kartenbereich */
+  border-color: #555; /* Falls Ränder verwendet werden */
  }
- 
 
+ /* Haupt-Scrollbereich */
  .scrollable-content {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 20px;
+  /* padding: top right bottom left; */
+  padding: 0 20px 20px 20px; /* <<< KORRIGIERT: Kein oberes Padding mehr */
   box-sizing: border-box;
  }
- 
 
+ /* Zusätzliche Styles für andere Seiteninhalte im Scrollbereich */
  .scrollable-content > div,
  .scrollable-content > .kontakt-container,
  .scrollable-content > .about-container,
  .scrollable-content > .faq-container,
- .scrollable-content > .impressum-container {
-  margin: 20px auto;
-  max-width: 90%;
+ .scrollable-content > .impressum-container,
+ .scrollable-content > .tierpatienten-content-area { /* Sicherstellen, dass alle Hauptcontainer gemeint sind */
+  margin: 0 auto 20px auto; /* Kein oberer Margin, Rest bleibt */
+  max-width: 90%; /* Oder eine andere gewünschte Breite */
+  padding-top: 20px; /* Füge hier Padding hinzu, wenn nötig für andere Seiten */
+ }
+
+ /* Spezifisches Padding für die Tierpatienten-Seite, falls nötig,
+    aber der sticky Button sollte jetzt direkt anschließen */
+ .scrollable-content > .tierpatienten-content-area {
+    padding-top: 0; /* Explizit kein Padding oben für diesen Bereich */
+    max-width: 100%; /* Erlaube volle Breite für sticky header */
+    margin: 0; /* Kein Margin für diesen Bereich */
+ }
+
+ /* Stelle sicher, dass der Body im Dark Mode den korrekten Hintergrund hat */
+ body.dark-mode {
+     background-color: #222;
+ }
+  body.light-mode {
+     background-color: #f8f8f8;
  }

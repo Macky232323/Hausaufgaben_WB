@@ -1,20 +1,33 @@
-.tierpatienten-container {
-    overflow-y: auto;
-    height: 80vh;
-    position: relative;
+/* Wrapper für den Inhalt der Tierpatienten-Seite */
+.tierpatienten-content-area {
+    position: relative; /* Notwendig für sticky positioning des Kind-Elements */
+    width: 100%;
    }
-   
   
    .add-tier-button-container {
     display: flex;
     justify-content: flex-end;
-    padding: 10px 0;
-    position: sticky;
-    top: 0;
-    background-color: #f9f9f9; /* Match background color */
-    z-index: 10; /* Ensure button stays on top */
+    padding: 15px 20px; /* Etwas mehr Padding */
+    position: sticky; /* Lässt den Container beim Scrollen oben kleben */
+    top: 0; /* Klebt am oberen Rand des Scroll-Containers */
+    /* Hintergrundfarbe wird vom Elternelement geerbt ODER explizit gesetzt */
+    background-color: inherit; /* Erbt den Hintergrund vom scrollable-content */
+    z-index: 10; /* Stellt sicher, dass der Button über den Karten liegt */
+    border-bottom: 1px solid #eee; /* Optional: leichte Trennlinie */
+    box-sizing: border-box;
+    width: 100%; /* Nimmt die Breite des Containers ein */
+    margin-bottom: 10px; /* Abstand zur Tierliste */
    }
-   
+  
+   /* Explizite Dark Mode Regel für den Button-Container Hintergrund,
+      falls Vererbung nicht das gewünschte Ergebnis liefert oder
+      wenn der scrollable-content keinen eigenen Hintergrund hat.
+      Normalerweise sollte inherit ausreichen, wenn index.css korrekt ist. */
+   .dark-mode .add-tier-button-container {
+    background-color: #222; /* Oder die Hintergrundfarbe von .dark-mode aus index.css */
+    border-bottom-color: #444; /* Dunklere Trennlinie */
+   }
+  
   
    .add-tier-button {
     background-color: #007bff;
@@ -26,18 +39,27 @@
     font-size: 1em;
     transition: background-color 0.3s;
    }
-   
+  
   
    .add-tier-button:hover {
     background-color: #0056b3;
    }
-   
   
+  
+   /* Dark Mode spezifische Button-Styles */
    .dark-mode .add-tier-button {
     background-color: #555;
+    color: #eee;
    }
-   
+  
   
    .dark-mode .add-tier-button:hover {
     background-color: #666;
+   }
+  
+   /* Sicherstellen, dass der Tier-Karten-Container *nicht* scrollt */
+   .tier-cards-container {
+     /* display: grid; etc. bleiben */
+     /* overflow-y: auto; und height: 80vh; HIER ENTFERNEN, falls vorhanden */
+     padding-top: 10px; /* Platz für den Button darüber */
    }

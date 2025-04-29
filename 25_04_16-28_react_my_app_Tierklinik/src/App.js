@@ -9,37 +9,40 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
  import DarkMode from './components/DarkMode';
  import TierDetail from './components/TierDetail';
  import TierHinzufuegen from './components/TierHinzufuegen';
- import { getAlleTiere } from './services/api'; // Importiere die API-Funktion
+ import { getAlleTiere } from './services/api';
  import './index.css';
- import './components/Tierpatienten.css'; // Importiere CSS für den Button
+ import './components/Tierpatienten.css';
 
  function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [geladeneTiere, setGeladeneTiere] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [hasMore, setHasMore] = useState(true); // Zustand, ob mehr Tiere geladen werden können
-  const [page, setPage] = useState(1); // Aktuelle Seite für die Paginierung (Beispiel)
-  const itemsPerPage = 6; // Tiere pro "Seite"
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 6;
+  const [needsRefresh, setNeedsRefresh] = useState(true); // State für Refresh
 
   const contentRef = useRef(null);
   const location = useLocation();
-  const navigate = useNavigate(); // useNavigate hook
+  const navigate = useNavigate();
 
   const isTierPatientenPage = location.pathname === '/tierpatienten';
   let containerClass = "scrollable-content";
   if (isTierPatientenPage) {
-    containerClass += " tierpatienten-content"; // Spezifische Klasse hinzufügen
+    containerClass += " tierpatienten-content";
   }
 
-
+  // DarkMode Logik
   const toggleDarkMode = () => {
-  setDarkMode(!darkMode);
-  document.body.classList.toggle('dark-mode', !darkMode);
-    document.body.classList.toggle('light-mode', darkMode);
+    setDarkMode(prevMode => {
+      const newMode = !prevMode;
+      localStorage.setItem('darkMode', newMode);
+      document.body.classList.toggle('dark-mode', newMode);
+      document.body.classList.toggle('light-mode', !newMode);
+      return newMode;
+    });
   };
-
-   // Initialisiere Dark Mode basierend auf localStorage oder Systemeinstellung
    useEffect(() => {
      const savedMode = localStorage.getItem('darkMode') === 'true';
      setDarkMode(savedMode);
@@ -47,93 +50,72 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
      document.body.classList.toggle('light-mode', !savedMode);
    }, []);
 
-   // Speichere Dark Mode Einstellung
-   useEffect(() => {
-     localStorage.setItem('darkMode', darkMode);
-     document.body.classList.toggle('dark-mode', darkMode);
-     document.body.classList.toggle('light-mode', !darkMode);
-   }, [darkMode]);
-
-
   // Lade Tiere Funktion
-  const ladeTiere = useCallback(async (pageToLoad) => {
-  if (loading || !hasMore) return; // Verhindere mehrfaches Laden oder wenn keine Tiere mehr da sind
-  setLoading(true);
-  setError(null);
-  console.log(`Lade Seite ${pageToLoad}...`);
-  try {
-  // Annahme: Die API unterstützt Paginierung über query parameter (z.B. ?page=1&limit=6)
-  // Wenn nicht, muss die Logik angepasst werden (z.B. alle laden und clientseitig paginieren)
-  // Für dieses Beispiel laden wir immer alle und slicen clientseitig.
-  const response = await getAlleTiere(); // Lädt *alle* Tiere
-  const alleTiereData = response.data;
+  const ladeTiere = useCallback(async (pageToLoad, force = false) => {
+    if (!force && (loading || !hasMore)) return;
+    setLoading(true);
+    setError(null);
+    console.log(`Lade Seite ${pageToLoad}...`);
+    try {
+      const response = await getAlleTiere();
+      const alleTiereData = response.data;
+      const startIndex = (pageToLoad - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const neueTiere = alleTiereData.slice(startIndex, endIndex);
+      setGeladeneTiere(prevTiere => pageToLoad === 1 ? neueTiere : [...prevTiere, ...neueTiere]);
+      setHasMore(endIndex < alleTiereData.length);
+      setPage(pageToLoad);
+    } catch (err) {
+      console.error('Fehler beim Laden der Tierdaten:', err);
+      setError('Fehler beim Laden der Tierdaten.');
+    } finally {
+      setLoading(false);
+    }
+  }, [loading, hasMore, itemsPerPage]);
 
-  const startIndex = (pageToLoad - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const neueTiere = alleTiereData.slice(startIndex, endIndex);
-
-  setGeladeneTiere(prevTiere => pageToLoad === 1 ? neueTiere : [...prevTiere, ...neueTiere]);
-  setHasMore(endIndex < alleTiereData.length); // Prüfen, ob noch mehr Tiere vorhanden sind
-  setPage(pageToLoad); // Update die aktuelle Seite
-
-  } catch (err) {
-  console.error('Fehler beim Laden der Tierdaten:', err);
-  setError('Fehler beim Laden der Tierdaten.');
-  // Optional: hasMore auf false setzen, um weitere Ladeversuche zu stoppen
-  // setHasMore(false);
-  } finally {
-  setLoading(false);
-  }
-  }, [loading, hasMore, itemsPerPage]); // Abhängigkeiten hinzufügen
-
-
-  // Initiales Laden für Tierpatienten-Seite
+  // Effekt, der auf location.state.refresh reagiert
   useEffect(() => {
-  if (isTierPatientenPage) {
-  // Setze Tiere und Paginierung zurück, wenn zur Seite navigiert wird
-  setGeladeneTiere([]);
-  setPage(0); // Setze auf 0, damit der nächste Effekt Seite 1 lädt
-  setHasMore(true);
-  // Trigger loading for page 1
-    ladeTiere(1);
-  }
+    if (location.state?.refresh) {
+      console.log("Navigation state 'refresh: true' erkannt.");
+      setNeedsRefresh(true);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, navigate]);
+
+  // Effekt zum Laden/Neuladen der Tierliste
+  useEffect(() => {
+    if (isTierPatientenPage && needsRefresh) {
+      console.log("Tierpatienten page active AND refresh needed, reloading data...");
+      setGeladeneTiere([]);
+      setPage(1);
+      setHasMore(true);
+      setLoading(false);
+      setError(null);
+      ladeTiere(1, true);
+      setNeedsRefresh(false);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTierPatientenPage]); // Nur ausführen, wenn sich der Pfad ändert
+  }, [isTierPatientenPage, needsRefresh]); // ladeTiere wurde aus den Deps entfernt, um Endlosschleife zu vermeiden
 
 
   // Infinite Scroll Logik
   useEffect(() => {
-  if (!isTierPatientenPage || !contentRef.current) return;
+    if (!isTierPatientenPage || !contentRef.current) return;
+    const containerElement = contentRef.current;
+    const handleScroll = () => {
+      if (containerElement.scrollTop + containerElement.clientHeight >= containerElement.scrollHeight - 200 && hasMore && !loading) {
+        ladeTiere(page + 1);
+      }
+    };
+    containerElement.addEventListener('scroll', handleScroll);
+    return () => {
+      containerElement.removeEventListener('scroll', handleScroll);
+    };
+  }, [isTierPatientenPage, ladeTiere, hasMore, loading, page]);
 
-  const observer = new IntersectionObserver(
-  (entries) => {
-  if (entries[0].isIntersecting && hasMore && !loading) {
-  ladeTiere(page + 1);
-  }
-  },
-  {
-  root: contentRef.current, // Beobachte Scrollen innerhalb dieses Containers
-  rootMargin: '0px',
-  threshold: 0.8, // Trigger, wenn 80% des Markers sichtbar sind
-  }
-  );
-
-  // Ein unsichtbares Element am Ende der Liste als Trigger
-  const scrollTrigger = document.createElement('div');
-  scrollTrigger.style.height = '10px'; // Kleines, unsichtbares Element
-  contentRef.current.appendChild(scrollTrigger);
-  observer.observe(scrollTrigger);
-
-  return () => {
-  if (scrollTrigger && contentRef.current?.contains(scrollTrigger)) {
-      observer.unobserve(scrollTrigger);
-      contentRef.current.removeChild(scrollTrigger);
-    }
-  };
-  }, [isTierPatientenPage, ladeTiere, hasMore, loading, page]); // Abhängigkeiten aktualisiert
 
   const handleAddTierClick = () => {
-  navigate('/tierpatienten/Hinzufuegen');
+    navigate('/tierpatienten/Hinzufuegen');
   };
 
   // --- Render Logic ---
@@ -181,10 +163,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
   );
 
   const renderTierpatienten = () => (
-    <>
+    <div className="tierpatienten-content-area">
        <div className="add-tier-button-container">
+         {/* Text kleingeschrieben */}
          <button onClick={handleAddTierClick} className="add-tier-button">
-           Tier Hinzufügen
+           Tier hinzufügen
          </button>
        </div>
        <div className="tier-cards-container">
@@ -192,31 +175,30 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
            <TierCard key={tier.id} {...tier} />
          ))}
        </div>
-       {loading && <div>Lade mehr Tiere...</div>}
-       {!hasMore && geladeneTiere.length > 0 && <div>Keine weiteren Tiere vorhanden.</div>}
-       {error && <div className="error-message">Fehler: {error}</div>}
-     </>
+       {loading && page > 1 && <div style={{textAlign: 'center', padding: '20px'}}>Lade mehr Tiere...</div>}
+       {!hasMore && geladeneTiere.length > 0 && <div style={{textAlign: 'center', padding: '20px'}}>Keine weiteren Tiere vorhanden.</div>}
+       {error && <div className="error-message" style={{textAlign: 'center', padding: '20px'}}>Fehler: {error}</div>}
+     </div>
   );
 
 
   return (
-  <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-  <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-  {/* Verwende contentRef für den scrollbaren Container */}
-  <div className={containerClass} ref={contentRef}>
-  <Routes>
-  <Route path="/" element={renderHome()} />
-  <Route path="/tierpatienten" element={renderTierpatienten()} />
-  <Route path="/tierpatienten/Hinzufuegen" element={<TierHinzufuegen />} />
-  <Route path="/tiere/:id" element={<TierDetail />} />
-  <Route path="/kontakt" element={<Kontakt />} />
-  <Route path="/about" element={<About />} />
-  <Route path="/faq" element={<FAQ />} />
-  <Route path="/impressum" element={<Impressum />} />
-  <Route path="*" element={<div>404 - Seite nicht gefunden</div>} /> {/* Fallback Route */}
-  </Routes>
-  </div>
-  </div>
+    <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+      <Titel darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className={containerClass} ref={contentRef}>
+        <Routes>
+          <Route path="/" element={renderHome()} />
+          <Route path="/tierpatienten" element={renderTierpatienten()} />
+          <Route path="/tierpatienten/Hinzufuegen" element={<TierHinzufuegen />} />
+          <Route path="/tiere/:id" element={<TierDetail />} />
+          <Route path="/kontakt" element={<Kontakt />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="*" element={<div>404 - Seite nicht gefunden</div>} />
+        </Routes>
+      </div>
+    </div>
   );
  }
 
