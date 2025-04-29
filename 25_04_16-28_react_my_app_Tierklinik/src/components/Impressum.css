@@ -1,0 +1,65 @@
+.impressum-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+   }
+   
+  
+   .impressum-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+   }
+   
+  
+   .impressum-container b {
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s;
+   }
+   
+  
+   .impressum-container p {
+    color: #666;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+   }
+   
+  
+   .impressum-container a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+   }
+   
+  
+   .impressum-container a:hover {
+    text-decoration: underline;
+   }
+   
+  
+   
+   .dark-mode .impressum-container {
+    background-color: #333;
+    color: #eee;
+   }
+   
+  
+   .dark-mode .impressum-container h1,
+   .dark-mode .impressum-container b {
+    color: #fff;
+   }
+   
+  
+   .dark-mode .impressum-container p {
+    color: #bbb;
+   }
+   
+  
+   .dark-mode .impressum-container a {
+    color: #89cff0;
+   }

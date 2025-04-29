@@ -1,0 +1,43 @@
+.tierpatienten-container {
+    overflow-y: auto;
+    height: 80vh;
+    position: relative;
+   }
+   
+  
+   .add-tier-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9; /* Match background color */
+    z-index: 10; /* Ensure button stays on top */
+   }
+   
+  
+   .add-tier-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .add-tier-button:hover {
+    background-color: #0056b3;
+   }
+   
+  
+   .dark-mode .add-tier-button {
+    background-color: #555;
+   }
+   
+  
+   .dark-mode .add-tier-button:hover {
+    background-color: #666;
+   }

@@ -1,0 +1,28 @@
+.titel-container {
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+ }
+
+ .titel-container.light-mode {
+  background-image: url('../assets/bg_hell.jpg');
+ }
+
+ .titel-container.dark-mode {
+  background-image: url('../assets/bg_dunkel.jpg');
+ }
+
+ .titel-container h1 {
+  margin: 0;
+  font-size: 5em;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+ }

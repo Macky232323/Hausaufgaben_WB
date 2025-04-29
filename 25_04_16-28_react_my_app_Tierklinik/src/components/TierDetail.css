@@ -1,0 +1,279 @@
+.tier-detail-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+   }
+   
+  
+   .tier-detail-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: color 0.3s;
+   }
+   
+  
+   .tier-detail-bild {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 20px;
+   }
+   
+  
+   .tier-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+   }
+   
+  
+   .tier-detail-table th,
+   .tier-detail-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s;
+   }
+   
+  
+   .tier-detail-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+   }
+   
+  
+   .anamnese-section {
+    margin-top: 20px;
+    transition: color 0.3s;
+   }
+   
+  
+   .anamnese-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    transition: color 0.3s, border-color 0.3s;
+   }
+   
+  
+   .anamnese-section p {
+    color: #666;
+    line-height: 1.6;
+    transition: color 0.3s;
+   }
+   
+  
+   .back-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .back-button:hover {
+    background-color: #45a049;
+   }
+   
+  
+   .dark-mode .tier-detail-container {
+    background-color: #333;
+    color: #eee;
+   }
+   
+  
+   .dark-mode .tier-detail-container h2,
+   .dark-mode .anamnese-section h3 {
+    color: #fff;
+   }
+   
+  
+   .dark-mode .tier-detail-table th {
+    background-color: #444;
+    color: #eee;
+   }
+   
+  
+   .dark-mode .tier-detail-table td {
+    border-bottom-color: #555;
+   }
+   
+  
+   .dark-mode .anamnese-section {
+    color: #bbb;
+   }
+   
+  
+   .dark-mode .anamnese-section h3 {
+    border-bottom-color: #555;
+   }
+   
+  
+   .dark-mode .back-button {
+    background-color: #555;
+   }
+   
+  
+   .dark-mode .back-button:hover {
+    background-color: #666;
+   }
+   
+  
+   .tier-card * {
+    pointer-events: none;
+   }
+   
+  
+   /* Edit Form Styles */
+   .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+   }
+   
+  
+   .edit-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s; /* Smooth color transition */
+   }
+   
+  
+   .dark-mode .edit-form label {
+    color: #fff; /* Label color for Dark Mode */
+   }
+   
+  
+   .edit-form input,
+   .edit-form textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    background-color: #fff; /* Default background color */
+    color: #333; /* Default text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+   }
+   
+  
+   .dark-mode .edit-form input,
+   .dark-mode .edit-form textarea {
+    background-color: #444; /* Dark Mode background color */
+    color: #eee; /* Dark Mode text color */
+    border-color: #555;
+   }
+   
+  
+   .edit-form textarea {
+    height: 100px;
+    resize: vertical;
+   }
+   
+  
+   .edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+   }
+   
+  
+   .save-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .save-button:hover {
+    background-color: #45a049;
+   }
+   
+  
+   .delete-button {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .delete-button:hover {
+    background-color: #d32f2f;
+   }
+   
+  
+   .edit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .edit-button:hover {
+    background-color: #0056b3;
+   }
+   
+  
+   .cancel-button {
+    background-color: #ccc;
+    color: #333;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+   }
+   
+  
+   .cancel-button:hover {
+    background-color: #999;
+   }
+   
+  
+   .error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+   }
+   
+  
+   .tier-detail-container.editing {
+    padding-top: 60px; /* Make room for the edit button */
+   }
