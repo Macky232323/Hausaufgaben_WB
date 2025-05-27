@@ -1,0 +1,68 @@
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  background-color: rgb(0, 0, 0, 0.0);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding: 0 5px 5px 5px;
+  margin: 0 5px 5px 5px;
+}
+
+.styled-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(3px);
+  border: 1px solid #888;
+  border-radius: 8px 8px 8px 48px;
+  padding: 15px;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.styled-box::-webkit-scrollbar {
+  width: 8px;
+  padding: 3px;
+  margin: 3px;
+}
+.styled-box::-webkit-scrollbar-track {
+  background: #2c2c2c;
+  border-radius: 4px;
+  padding: 3px;
+  margin: 3px;
+}
+.styled-box::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+.styled-box::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.styled-box {
+  scrollbar-width: thin;
+  scroll-padding: 3px;
+  scrollbar-color: #666 #2c2c2c;
+}
+
+body.animate-body-background {
+
+}

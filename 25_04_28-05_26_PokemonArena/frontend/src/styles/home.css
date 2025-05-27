@@ -1,0 +1,66 @@
+.home-container-styles .headline {
+    text-align: center;
+    color: #c00000 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1) !important;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.home-container-styles .content h3 {
+    color: #b30000 !important;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    text-align: left;
+    font-size: 1.4em;
+}
+
+.home-container-styles .content p,
+.home-container-styles .content ul.list li {
+    text-shadow: none !important;
+    color: #333333 !important;
+    line-height: 1.65;
+    margin-bottom: 1.2em;
+    font-size: 0.95rem;
+    font-weight: bold; /* Hinzugefügt für Fettschrift */
+}
+
+.home-container-styles .content ul.list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 5px;
+}
+
+.home-container-styles .content ul.list li.pokeball-list-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    /* font-weight: bold; wird von der vorherigen Regel geerbt */
+}
+
+.home-container-styles .content ul.list li.pokeball-list-item::before {
+    content: "◉";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    color: #c00000;
+    font-size: 1.3em;
+    line-height: 1;
+}
+
+.professor-images-container {
+    position: absolute;
+    top: 200px;
+    right: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0px;
+    z-index: 10;
+    
+}
+
+.professor-image {
+    height: 250px;
+    width: auto;
+}

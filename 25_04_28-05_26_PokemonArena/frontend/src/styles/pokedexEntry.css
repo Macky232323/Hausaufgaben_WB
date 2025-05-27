@@ -1,0 +1,415 @@
+.pokedex-design-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 370px;
+    height: 450px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.50); /* Fallback */
+    border: 7px solid #D82C2E;
+    outline: 3px solid #A30000;
+    outline-offset: 0px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35),
+                inset 0 0 0 2px white,
+                inset 0 0 8px rgba(0,0,0,0.25);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 40px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.pokedex-entry-loading p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pokedex-entry-layout-new {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    gap: 8px;
+    position: relative;
+}
+
+.detail-box-style {
+    background-color: var(--pokemon-theme-color, rgba(60, 60, 60, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    padding: 8px 10px; /* Haupt-Padding für die Detail-Box, wirkt sich auf Titelposition aus */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.pe-header {
+    grid-area: header;
+    position: relative;
+    z-index: 10;
+}
+
+.pe-name-type-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.pe-pokemon-name-header {
+    margin: 0;
+    font-size: 1.2rem;
+    text-align: left;
+    flex-grow: 1;
+    margin-right: 10px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.pe-types-icon-container-main {
+    flex-shrink: 0;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.type-icon-detail {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+.pe-main-content-grid {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.pe-grid-item {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.pe-grid-item.pe-image-container-wrapper {
+    overflow: visible;
+    z-index: 30;
+}
+
+.pe-image-container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: var(--pokemon-theme-color, rgba(60, 60, 60, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    box-sizing: border-box;
+    display: flex;
+    padding: 5px;
+}
+
+.pe-grid-item-title {
+    font-size: 0.9rem;
+    color: #f0f0f0;
+    margin: 0 0 8px 0;
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 5px;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pe-pokemon-image-square {
+    max-width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.45));
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+
+.pe-image-container:hover .pe-pokemon-image-square {
+    transform: scale(1.8);
+    z-index: 35;
+}
+
+.pe-pokemon-image-placeholder-square {
+    width: 80%;
+    height: 80%;
+    border: 2px dashed rgba(255,255,255,0.2);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pe-physical-info,
+.pe-weaknesses,
+.pe-resistances {
+    z-index: 5;
+}
+
+.pe-box-content-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    /* Entferne das generische Padding hier, um es spezifischer zu steuern */
+}
+
+.pe-physical-info .pe-box-content-area {
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Behält die vertikale Zentrierung für die p-Tags */
+    padding: 5px 8px 2px 8px; /* Angepasstes Padding: Oben, Rechts, Unten, Links */
+                                /* Das linke Padding (8px) sollte den Abstand schaffen */
+}
+
+.info-item {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Stellt sicher, dass das Flex-Item die Breite für space-between nutzt */
+}
+.info-item:last-child {
+    margin-bottom: 0;
+}
+.info-label, .info-value {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.info-label {
+    font-weight: bold;
+    color: #ddd;
+    margin-right: 5px; /* Kleiner Abstand zwischen Label und Wert, falls sie zusammenrücken */
+}
+.info-value {
+    /* Text bleibt rechtsbündig durch space-between auf info-item */
+}
+
+
+.pe-weaknesses .pe-box-content-area,
+.pe-resistances .pe-box-content-area {
+    padding: 5px 2px 2px 2px; /* Beibehaltung des vorherigen Paddings für diese Bereiche */
+}
+
+
+.pe-weaknesses .pe-box-content-area::-webkit-scrollbar,
+.pe-resistances .pe-box-content-area::-webkit-scrollbar {
+    width: 4px;
+}
+.pe-weaknesses .pe-box-content-area::-webkit-scrollbar-track,
+.pe-resistances .pe-box-content-area::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.05);
+    border-radius: 2px;
+}
+.pe-weaknesses .pe-box-content-area::-webkit-scrollbar-thumb,
+.pe-resistances .pe-box-content-area::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.type-icons-grid-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.type-icon-small-grid {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+.type-badge-text-fallback,
+.type-badge-text-inline-small {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-weight: 500;
+    display: inline-block;
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.no-effectiveness-inline,
+.loading-text-inline-small,
+.error-text-inline-small {
+    font-style: italic;
+    color: #ccc;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.error-text-inline-small {
+    color: #ff8a8a;
+}
+
+.pe-footer {
+    grid-area: footer;
+    position: relative;
+    z-index: 10;
+}
+.pe-footer-title {
+    margin-top: 0;
+    margin-bottom: 6px;
+    color: #f0f0f0;
+    font-size: 1rem;
+    flex-shrink: 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.pe-description-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 30px;
+    padding: 0 5px 0 0; /* Padding-links hier ist 0, da es vom .detail-box-style (8px 10px) kommt */
+                         /* und das Padding vom .pe-box-content-area nicht hier gilt */
+    font-size: 0.8rem;
+    line-height: 1.35;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.pe-description-content p {
+    margin-top: 0; /* Verhindert zusätzlichen oberen Abstand des ersten Paragraphen */
+}
+
+.pe-description-content::-webkit-scrollbar {
+    width: 5px;
+}
+.pe-description-content::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+.pe-description-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 850px) {
+    .pokedex-design-container {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 450px;
+    }
+    .pokedex-entry-layout-new {
+      gap: 6px;
+    }
+    .pe-main-content-grid {
+      grid-template-rows: minmax(100px, 1fr) minmax(85px, 1fr) ;
+      gap: 6px;
+    }
+    .pe-pokemon-name-header {
+      font-size: 1.1rem;
+    }
+    .type-icon-detail {
+      width: 22px;
+      height: 22px;
+    }
+    .pe-grid-item-title {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+    }
+    .type-icon-small-grid {
+      width: 22px;
+      height: 22px;
+    }
+
+    .pe-physical-info .pe-box-content-area,
+    .pe-weaknesses .pe-box-content-area,
+    .pe-resistances .pe-box-content-area {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        padding: 4px 6px 1px 6px; /* Angepasstes Padding für kleinere Schirme */
+    }
+
+    .info-item {
+        margin-bottom: 6px;
+    }
+    .pe-physical-info .info-item {
+      font-size: 0.75rem;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 5px;
+    }
+     .pe-physical-info .info-label {
+        margin-bottom: 1px;
+    }
+    .pe-physical-info .info-value {
+        text-align: left;
+    }
+    .pe-footer {
+      min-height: 70px;
+    }
+    .pe-footer-title {
+        font-size: 0.9rem;
+    }
+    .pe-description-content {
+      font-size: 0.75rem;
+      /* padding: 0; /* Padding wird von .detail-box-style übernommen */
+    }
+}

@@ -1,0 +1,156 @@
+.pokemon-card {
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    
+    background-color: var(--pokemon-card-transparent-type-color, rgba(30, 30, 30, 0.85)); 
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px 8px 8px 16px;
+    
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.pokemon-card::before,
+.pokemon-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px; 
+    background-color: var(--pokemon-card-solid-type-color);
+    opacity: 0.85;
+    z-index: 3; 
+    transition: opacity 0.2s ease-in-out;
+}
+
+.pokemon-card::before {
+    top: 0;
+    border-top-left-radius: 7px; 
+    border-top-right-radius: 7px;
+}
+
+.pokemon-card::after {
+    bottom: 0;
+    border-bottom-left-radius: 15px; 
+    border-bottom-right-radius: 7px;
+}
+
+.pokemon-card:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: var(--pokemon-card-hover-transparent-type-color, rgba(30, 30, 30, 1.0));
+}
+
+.pokemon-card:hover::before,
+.pokemon-card:hover::after {
+    opacity: 1;
+}
+
+.card-header {
+    padding: 0.4rem;
+    text-align: center;
+    flex-shrink: 0;
+    background-color: transparent; /* Hintergrund entfernt für Normalzustand */
+    position: relative;
+    z-index: 1;
+    margin-top: 6px; 
+    border-radius: 0; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6), 0 0 5px rgba(0,0,0,0.4);
+    color: #fff;
+}
+
+.card-image-area {
+    position: relative;
+    padding: 5px; 
+    box-sizing: border-box;
+    flex-shrink: 0;
+    /* Helle Fläche jetzt hier im Normalzustand */
+    background-color: var(--pokemon-card-transparent-type-color, rgba(45, 45, 45, 0.9)); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px; 
+    z-index: 1;
+    transition: background-color 0.2s ease-in-out; /* Für sanften Übergang, falls Hover doch anders sein soll */
+}
+
+.pokemon-card:hover .card-image-area {
+    background-color: transparent; /* Bildbereich wird beim Hovern der Karte transparent */
+}
+
+.card-pokemon-image {
+    width: 100%;
+    height: 85px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.4));
+    transition: transform 0.2s ease-in-out;
+}
+
+.pokemon-card:hover .card-pokemon-image {
+    transform: scale(1.3);
+}
+
+.card-type-icons-container {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background-color: transparent;
+    padding: 0;
+}
+
+.type-icon-card {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.card-body {
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    flex-shrink: 0;
+    background-color: transparent; /* Hintergrund entfernt für Normalzustand */
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 6px; 
+    border-radius: 0; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.card-pokemon-name {
+    margin: 0;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6), 0 0 5px rgba(0,0,0,0.4);
+    color: #fff;
+}
+
+/* Diese Regel ist weiterhin korrekt, um sicherzustellen, dass Header/Body beim Hovern transparent bleiben */
+.pokemon-card:hover .card-header,
+.pokemon-card:hover .card-body {
+    background-color: transparent;
+}

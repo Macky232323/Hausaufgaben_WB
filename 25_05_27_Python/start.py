@@ -24,3 +24,6 @@ print(a // b) # Ganzzahldivision
 print("Hallo " + first_name + " " + last_name) # String Verkettung
 print(3* (first_name + " " + last_name + " ")) # String Multiplikation
 print(f"Hallo {first_name} {last_name}") # f-String
+
+print(0.1+0.1+0.1 == 0.3) # 0.30000000000000004 nicht genau
+print(round(0.1+0.1+0.1, 2) == 0.3) # Rundung auf 2 Nachkommastellen

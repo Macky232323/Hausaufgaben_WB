@@ -1,0 +1,201 @@
+.pokedex-design-container.battle-details-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 370px;
+    height: 450px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.50);
+    border: 7px solid #D82C2E;
+    outline: 3px solid #A30000;
+    outline-offset: 0px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 2px white,
+                inset 0 0 8px rgba(0,0,0,0.25);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 40px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    gap: 8px;
+    overflow: visible;
+}
+
+.battle-details-layout.battle-details-loading {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.1rem;
+}
+.battle-details-layout.battle-details-loading p {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.detail-box-battle-style {
+    background-color: var(--pokemon-theme-color, rgba(60, 60, 60, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 8px 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.detail-box-battle-style h3 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    color: #f8f8f8;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+}
+
+.section-stats-battle {
+    flex-shrink: 0;
+    min-height: 190px;
+    max-height: 200px;
+}
+.section-stats-battle h3 {
+    margin-bottom: 2px;
+}
+
+.section-stats-battle .recharts-cartesian-axis-tick-value text,
+.section-stats-battle .recharts-yaxistick-value text,
+.section-stats-battle .recharts-label text {
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+    fill: #f0f0f0 !important;
+}
+.section-stats-battle .recharts-bar .recharts-rectangle {
+     filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));
+}
+
+.section-moves-battle {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+}
+.section-moves-battle::-webkit-scrollbar {
+    width: 5px;
+}
+.section-moves-battle::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+}
+.section-moves-battle::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+}
+
+.moves-selection-container-battle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 4px;
+}
+.move-slot-battle {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-add-to-team-battle {
+    flex-shrink: 0;
+    padding-top: 0;
+    margin-top: 0;
+}
+.add-to-team-button-battle {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, outline 0.2s ease, outline-offset 0.2s ease, opacity 0.2s ease;
+    text-align: center;
+    outline: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    transform: scale(1);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.add-to-team-button-battle:disabled {
+    background-color: var(--pokemon-theme-color, rgba(60, 60, 60, 0.6));
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    color: #ccc;
+    border-color: rgba(255, 255, 255, 0.25);
+    cursor: not-allowed;
+    opacity: 0.85;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    outline: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.add-to-team-button-battle:disabled:hover {
+    opacity: 0.8;
+    outline: none;
+}
+
+.add-to-team-button-battle:not(:disabled) {
+    background-color: rgba(216, 44, 46, 0.5);
+    border: 1px solid rgba(163, 0, 0, 0.7);
+    box-shadow: 0 2px 5px rgba(216, 44, 46, 0.3);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    outline: none;
+}
+
+.add-to-team-button-battle:not(:disabled):hover {
+    background-color: rgba(216, 44, 46, 0.7);
+    transform: scale(1);
+    outline: 2px solid #E74C3C;
+    outline-offset: -2px;
+}
+
+.loading-text-small,
+.error-text-small {
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 8px 0;
+    color: #ccc;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+.error-text-small {
+    color: #ff8a8a;
+}
+
+@media (max-width: 850px) {
+    .pokedex-design-container.battle-details-layout {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        height: auto;
+        min-height: 450px;
+    }
+    .section-stats-battle {
+        min-height: 180px;
+    }
+    .moves-selection-container-battle {
+        grid-template-columns: 1fr;
+    }
+    .section-moves-battle {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
