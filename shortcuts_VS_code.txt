@@ -1,0 +1,24 @@
+Standard Befehle:
+Über Wörter navigieren:  STRG + ←/→
+Zeichen markieren: Shift + ←/→
+Wörter markieren: STRG + Shift + ←/→
+Wörter/Zeilen Ausschneiden : STRG + X
+Alles markieren: STRG + A
+Clipboard History: WIN + V
+
+VSC:
+Alle Shortcuts anzeigen: STRG + K + S
+Zeile bzw markierter Bereich verschieben: ALT(links)+ ↑/↓
+Zeile duplizieren: ALT + Shift + ↑/↓
+Panel (Terminal) togglen: STRG + J
+Datei durchsuchen: STRG + F
+Komplette Ordnerstruktur durchsuchen: STRG + SHIFT + F
+Wörter ersetzen: STRG + H
+Mehrere Cursor erstellen: ALT + Klick
+Zwischen VsCode Tabs wechseln: STRG + PAGE_UP/PAGE_DOWN
+ODER 
+STRG + Tab
+Springe zum letzten Bearbeitungsort: Alt + ←/→ 
+Tab schließen: STRG + W
+Suchpalette öffnen: STRG + P ( Dateien suchen bsp: AnimalList.js:<zeile>)
+Zeile kommentieren/auskommentieren: STRG + # oder STRG + K + C / STRG + K + U
