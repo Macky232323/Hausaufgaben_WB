@@ -1,0 +1,28 @@
+Lexis, Syntax & Semantik
+
+
+
+Lexis - Bausteine des Codes -> if, else, +, -
+Syntax - Grammatik der Programmiersprache -> print("Hallo Welt")
+
+Beispiel für Syntaxfehler:
+print("Hallo Welt) -> " vergessen am Ende 
+
+Semantik - die Bedeutung der Syntax
+
+print( 2 + 2 )
+print( 5 / 0 ) - semantischer Fehler
+print("5" + 3) 
+
+
+
+Reihenfolge der Berechnung ( Prioritäten) - Vorzeichen werden immer vorher betrachtet
+Klammer -> Potenzen -> Multiplikation/Division -> Addition/Subtraktion
+
+Bitweise Operatoren
+& -> Nur 1 wenn beide Bits 1 sind
+| -> Sobald ein Bit 1 ist wird es übernommen
+^ -> Bei Unterschieden wird eine 1 gesetzt
+~ -> Invertiert die Bits und das Ergebnis wird umgekehrt ( + zu -)
+<< -> Verschiebt Bits nach links um die angegebene Zahl (bsp. 7<<1 = 14)
+>> -> Verschiebt Bits nach rechts um die angegebene Zahl (bsp. 8>>1 = 4)
