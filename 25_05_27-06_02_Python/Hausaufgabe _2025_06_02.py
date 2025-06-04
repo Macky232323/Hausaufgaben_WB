@@ -19,7 +19,7 @@ print("Liste2 Kopiert:", liste2_kopiert) # Erwartet: [4, 5, 6, 7]
 werte_debug2 = [2, 4, 6, 8]
 ergebnis_debug2 = [x / 2 for x in werte_debug2 if x < 5]
 print("Debug 2: Ergebnis =", ergebnis_debug2) # Erwartet: [1.0, 2.0]
-# F: Was bewirkt `if x < 5`? A: Filtert Elemente, nur die < 5 werden verarbeitet.
+# Filtert Elemente, nur die < 5 werden verarbeitet.
 
  
 
